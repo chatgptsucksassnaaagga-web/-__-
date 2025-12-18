@@ -1,14 +1,3 @@
-local gui = loadstring(game:HttpGet("https://pastebin.com/raw/tMiN10QL"))()
--- ↑ If you already pasted G2L directly, REMOVE this line and keep gui reference below
-
-local ScreenGui = gui
-local Whole = ScreenGui:FindFirstChild("Whole frame", true)
-local LogFrame = Whole:FindFirstChild("Log frame", true)
-
-local RefreshBtn = Whole:FindFirstChild("Refresh Button", true)
-local ClearBtn = Whole:FindFirstChild("TextButton", true)
-local AutoJoinBtn = Whole:FindFirstChild("Auto join", true)
-
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
@@ -17,96 +6,193 @@ local Player = Players.LocalPlayer
 local request = (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request) or (krnl and krnl.request) or request
 if not request then return end
 
-local RELAY_SERVERS = "https://acne-variations-flexibility-designs.trycloudflare.com/servers"
+local RELAY_URL = "https://acne-variations-flexibility-designs.trycloudflare.com/servers"
 
-local autoJoin = false
-local logs = {}
+-- ================= GUI =================
 
--- SCROLLING
+local ScreenGui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local Whole = Instance.new("Frame", ScreenGui)
+Whole.Name = "Whole frame"
+Whole.Size = UDim2.new(0,277,0,374)
+Whole.Position = UDim2.new(0.39641,0,0.1684,0)
+Whole.BackgroundColor3 = Color3.fromRGB(27,27,27)
+Whole.BackgroundTransparency = 0.03
+Whole.BorderSizePixel = 0
+Instance.new("UIDragDetector", Whole)
+Instance.new("UICorner", Whole).CornerRadius = UDim.new(0,2)
+local stroke = Instance.new("UIStroke", Whole)
+stroke.Thickness = 2
+stroke.Color = Color3.fromRGB(237,40,0)
+
+local Title = Instance.new("TextLabel", Whole)
+Title.Text = "Krypth AJ"
+Title.Size = UDim2.new(0,120,0,30)
+Title.Position = UDim2.new(0.03,0,-0.09,0)
+Title.BackgroundTransparency = 1
+Title.FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+Title.TextSize = 20
+Title.TextColor3 = Color3.fromRGB(255,255,255)
+
+local LogsLabel = Instance.new("TextLabel", Whole)
+LogsLabel.Text = "LOGS"
+LogsLabel.Size = UDim2.new(0,60,0,20)
+LogsLabel.Position = UDim2.new(0.55,0,-0.05,0)
+LogsLabel.BackgroundTransparency = 1
+LogsLabel.FontFace = Title.FontFace
+LogsLabel.TextSize = 22
+LogsLabel.TextColor3 = Color3.fromRGB(255,255,255)
+
+local Refresh = Instance.new("TextButton", Whole)
+Refresh.Text = "REFRESH"
+Refresh.Size = UDim2.new(0,76,0,31)
+Refresh.Position = UDim2.new(0.02,0,0.024,0)
+Refresh.BackgroundColor3 = Color3.fromRGB(199,31,0)
+Refresh.FontFace = Title.FontFace
+Refresh.TextSize = 22
+Refresh.TextColor3 = Color3.fromRGB(255,255,255)
+Refresh.BorderSizePixel = 0
+Instance.new("UICorner", Refresh).CornerRadius = UDim.new(0,2)
+Instance.new("UIStroke", Refresh).Thickness = 2
+
+local AutoJoin = Instance.new("TextButton", Whole)
+AutoJoin.Text = "AUTO JOIN"
+AutoJoin.Size = UDim2.new(0,76,0,31)
+AutoJoin.Position = UDim2.new(0.02,0,0.128,0)
+AutoJoin.BackgroundColor3 = Refresh.BackgroundColor3
+AutoJoin.FontFace = Title.FontFace
+AutoJoin.TextSize = 20
+AutoJoin.TextColor3 = Color3.fromRGB(255,255,255)
+AutoJoin.BorderSizePixel = 0
+Instance.new("UICorner", AutoJoin).CornerRadius = UDim.new(0,2)
+Instance.new("UIStroke", AutoJoin).Thickness = 2
+
+local Clear = Instance.new("TextButton", Whole)
+Clear.Text = "CLEAR"
+Clear.Size = UDim2.new(0,76,0,31)
+Clear.Position = UDim2.new(0.02,0,0.235,0)
+Clear.BackgroundColor3 = Refresh.BackgroundColor3
+Clear.FontFace = Title.FontFace
+Clear.TextSize = 21
+Clear.TextColor3 = Color3.fromRGB(255,255,255)
+Clear.BorderSizePixel = 0
+Instance.new("UICorner", Clear).CornerRadius = UDim.new(0,2)
+Instance.new("UIStroke", Clear).Thickness = 2
+
+local LogFrame = Instance.new("ScrollingFrame", Whole)
+LogFrame.Name = "Log frame"
+LogFrame.Size = UDim2.new(0,189,0,374)
+LogFrame.Position = UDim2.new(0.3177,0,0,0)
+LogFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+LogFrame.BackgroundTransparency = 0.4
+LogFrame.BorderSizePixel = 0
+LogFrame.ScrollBarThickness = 4
+LogFrame.ScrollBarImageTransparency = 0.4
+LogFrame.CanvasSize = UDim2.new(0,0,0,0)
+
 local layout = Instance.new("UIListLayout", LogFrame)
 layout.Padding = UDim.new(0,6)
 
-local padding = Instance.new("UIPadding", LogFrame)
-padding.PaddingTop = UDim.new(0,8)
-padding.PaddingLeft = UDim.new(0,6)
+-- LOG TEMPLATE
+local function createLogTemplate()
+	local f = Instance.new("Frame")
+	f.Name = "LOG"
+	f.Size = UDim2.new(0,176,0,55)
+	f.BackgroundColor3 = Color3.fromRGB(199,31,0)
+	f.BorderSizePixel = 0
+	Instance.new("UICorner", f).CornerRadius = UDim.new(0,4)
+	Instance.new("UIStroke", f).Thickness = 2
 
-LogFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
-LogFrame.CanvasSize = UDim2.new(0,0,0,0)
-LogFrame.ScrollBarImageTransparency = 0.4
-LogFrame.ScrollBarThickness = 4
+	local name = Instance.new("TextLabel", f)
+	name.Name = "Brainrot name"
+	name.Position = UDim2.new(0,4,0.12,0)
+	name.Size = UDim2.new(0,90,0,16)
+	name.BackgroundTransparency = 1
+	name.FontFace = Title.FontFace
+	name.TextSize = 20
+	name.TextColor3 = Color3.fromRGB(255,255,255)
 
--- CLEAR LOGS
+	local mps = Instance.new("TextLabel", f)
+	mps.Name = "MPS"
+	mps.Position = UDim2.new(0,4,0.56,0)
+	mps.Size = UDim2.new(0,60,0,16)
+	mps.BackgroundTransparency = 1
+	mps.FontFace = Title.FontFace
+	mps.TextSize = 20
+	mps.TextColor3 = Color3.fromRGB(255,255,255)
+
+	local join = Instance.new("TextButton", f)
+	join.Name = "Join button"
+	join.Text = "JOIN"
+	join.Size = UDim2.new(0,68,0,40)
+	join.Position = UDim2.new(0.57,0,0.12,0)
+	join.BackgroundColor3 = f.BackgroundColor3
+	join.FontFace = Title.FontFace
+	join.TextSize = 22
+	join.TextColor3 = Color3.fromRGB(255,255,255)
+	join.BorderSizePixel = 0
+	Instance.new("UICorner", join).CornerRadius = UDim.new(0,2)
+	Instance.new("UIStroke", join).Thickness = 2
+
+	return f
+end
+
+-- ================= LOGIC =================
+
+local autoJoinEnabled = false
+
 local function clearLogs()
 	for _,v in ipairs(LogFrame:GetChildren()) do
-		if v:IsA("Frame") and v.Name == "LOG" then
-			v:Destroy()
-		end
+		if v:IsA("Frame") then v:Destroy() end
 	end
+	LogFrame.CanvasSize = UDim2.new(0,0,0,0)
 end
 
--- CREATE LOG ENTRY
-local function createLog(data)
-	local log = Whole.Log_frame.LOG:Clone()
+local function addLog(data)
+	local log = createLogTemplate()
 	log.Parent = LogFrame
-	log.Visible = true
 
-	log:FindFirstChild("Brainrot name").Text = data.brainrot
-	log:FindFirstChild("MPS").Text = tostring(math.floor(data.mps/1e6)).."M"
+	log["Brainrot name"].Text = data.brainrot
+	log["MPS"].Text = tostring(math.floor(data.mps)).." MPS"
 
-	local join = log:FindFirstChild("Join button")
-	join.MouseButton1Click:Connect(function()
-		TeleportService:TeleportToPlaceInstance(
-			data.placeId,
-			data.jobId,
-			Player
-		)
+	log["Join button"].MouseButton1Click:Connect(function()
+		TeleportService:TeleportToPlaceInstance(data.placeId, data.jobId, Player)
 	end)
 
-	LogFrame.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 20)
+	task.wait()
+	LogFrame.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
 end
 
--- FETCH SERVERS
-local function fetchServers()
-	local res = request({
-		Url = RELAY_SERVERS,
-		Method = "GET"
-	})
-	if not res or not res.Body then return end
-
-	local data = HttpService:JSONDecode(res.Body)
+local function refreshLogs()
 	clearLogs()
-
+	local res = request({Url = RELAY_URL, Method = "GET"})
+	if not res or not res.Body then return end
+	local data = HttpService:JSONDecode(res.Body)
 	for _,server in ipairs(data) do
-		createLog(server)
+		addLog(server)
 	end
 end
 
--- AUTO JOIN LOOP
+Refresh.MouseButton1Click:Connect(refreshLogs)
+Clear.MouseButton1Click:Connect(clearLogs)
+
+AutoJoin.MouseButton1Click:Connect(function()
+	autoJoinEnabled = not autoJoinEnabled
+	AutoJoin.Text = autoJoinEnabled and "AUTO JOIN ✓" or "AUTO JOIN"
+end)
+
 task.spawn(function()
 	while true do
 		task.wait(2)
-		if autoJoin then
-			local res = request({Url = RELAY_SERVERS, Method = "GET"})
+		if autoJoinEnabled then
+			local res = request({Url = RELAY_URL, Method = "GET"})
 			if res and res.Body then
 				local data = HttpService:JSONDecode(res.Body)
 				if data[1] then
-					TeleportService:TeleportToPlaceInstance(
-						data[1].placeId,
-						data[1].jobId,
-						Player
-					)
+					TeleportService:TeleportToPlaceInstance(data[1].placeId, data[1].jobId, Player)
 				end
 			end
 		end
 	end
-end)
-
--- BUTTON HOOKS
-RefreshBtn.MouseButton1Click:Connect(fetchServers)
-
-ClearBtn.MouseButton1Click:Connect(clearLogs)
-
-AutoJoinBtn.MouseButton1Click:Connect(function()
-	autoJoin = not autoJoin
-	AutoJoinBtn.Text = autoJoin and "AUTO JOIN ✓" or "AUTO JOIN"
 end)
