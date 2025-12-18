@@ -23,7 +23,7 @@ end
 -- =====================================
 -- CONFIG
 -- =====================================
-local SERVER_URL = "https://acne-variations-flexibility-designs.trycloudflare.com/servers"
+local SERVER_URL = "https://groups-patch-glad-pollution.trycloudflare.com/submit"
 local AUTO_JOIN = false
 local REFRESH_DELAY = 5
 
