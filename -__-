@@ -1,0 +1,137 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "KrypthAJ"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local main = Instance.new("Frame")
+main.Size = UDim2.fromScale(0.32, 0.38)
+main.Position = UDim2.fromScale(0.34, 0.31)
+main.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+main.BorderSizePixel = 0
+main.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 14)
+corner.Parent = main
+
+local stroke = Instance.new("UIStroke")
+stroke.Thickness = 1.5
+stroke.Color = Color3.fromRGB(80, 90, 120)
+stroke.Parent = main
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.fromScale(1, 0.16)
+title.BackgroundTransparency = 1
+title.Text = "Krypth AJ"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 26
+title.TextColor3 = Color3.fromRGB(235, 235, 240)
+title.Parent = main
+
+local divider = Instance.new("Frame")
+divider.Size = UDim2.fromScale(0.9, 0.003)
+divider.Position = UDim2.fromScale(0.05, 0.18)
+divider.BackgroundColor3 = Color3.fromRGB(70, 80, 110)
+divider.BorderSizePixel = 0
+divider.Parent = main
+
+local body = Instance.new("Frame")
+body.Size = UDim2.fromScale(0.9, 0.72)
+body.Position = UDim2.fromScale(0.05, 0.23)
+body.BackgroundTransparency = 1
+body.Parent = main
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 14)
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.Parent = body
+
+local function createBox(text)
+	local box = Instance.new("Frame")
+	box.Size = UDim2.fromScale(1, 0.18)
+	box.BackgroundColor3 = Color3.fromRGB(26, 26, 32)
+	box.BorderSizePixel = 0
+
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, 10)
+	c.Parent = box
+
+	local s = Instance.new("UIStroke")
+	s.Thickness = 1
+	s.Color = Color3.fromRGB(60, 70, 100)
+	s.Parent = box
+
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.fromScale(0.4, 1)
+	label.BackgroundTransparency = 1
+	label.Text = text
+	label.Font = Enum.Font.GothamMedium
+	label.TextSize = 15
+	label.TextColor3 = Color3.fromRGB(200, 200, 210)
+	label.Parent = box
+
+	local input = Instance.new("TextBox")
+	input.Size = UDim2.fromScale(0.55, 0.6)
+	input.Position = UDim2.fromScale(0.42, 0.2)
+	input.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+	input.Text = ""
+	input.PlaceholderText = "Enter value"
+	input.Font = Enum.Font.Gotham
+	input.TextSize = 14
+	input.TextColor3 = Color3.fromRGB(230, 230, 235)
+	input.BorderSizePixel = 0
+	input.ClearTextOnFocus = false
+	input.Parent = box
+
+	local ic = Instance.new("UICorner")
+	ic.CornerRadius = UDim.new(0, 8)
+	ic.Parent = input
+
+	return box, input
+end
+
+local mpsBox, mpsInput = createBox("Min MPS")
+mpsBox.Parent = body
+
+local playersBox, playersInput = createBox("Max Players")
+playersBox.Parent = body
+
+local joinButton = Instance.new("TextButton")
+joinButton.Size = UDim2.fromScale(1, 0.22)
+joinButton.BackgroundColor3 = Color3.fromRGB(45, 60, 140)
+joinButton.Text = "AUTO JOIN"
+joinButton.Font = Enum.Font.GothamBold
+joinButton.TextSize = 18
+joinButton.TextColor3 = Color3.fromRGB(245, 245, 250)
+joinButton.BorderSizePixel = 0
+joinButton.Parent = body
+
+local bc = Instance.new("UICorner")
+bc.CornerRadius = UDim.new(0, 12)
+bc.Parent = joinButton
+
+local bs = Instance.new("UIStroke")
+bs.Thickness = 1
+bs.Color = Color3.fromRGB(90, 110, 200)
+bs.Parent = joinButton
+
+joinButton.MouseEnter:Connect(function()
+	TweenService:Create(joinButton, TweenInfo.new(0.15), {BackgroundColor3 = Color3.fromRGB(60, 80, 180)}):Play()
+end)
+
+joinButton.MouseLeave:Connect(function()
+	TweenService:Create(joinButton, TweenInfo.new(0.15), {BackgroundColor3 = Color3.fromRGB(45, 60, 140)}):Play()
+end)
+
+UserInputService.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.LeftControl then
+		gui.Enabled = not gui.Enabled
+	end
+end)
