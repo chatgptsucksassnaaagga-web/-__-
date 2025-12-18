@@ -2,6 +2,7 @@ local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 local RELAY_URL = "https://YOUR_RELAY_URL/servers"
@@ -12,34 +13,34 @@ gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local main = Instance.new("Frame")
-main.Size = UDim2.fromScale(0.36, 0.55)
-main.Position = UDim2.fromScale(0.32, 0.22)
-main.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+main.Size = UDim2.fromScale(0.34, 0.46)
+main.Position = UDim2.fromScale(0.33, 0.27)
+main.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
 main.BorderSizePixel = 0
 main.Parent = gui
 Instance.new("UICorner", main).CornerRadius = UDim.new(0, 14)
 local ms = Instance.new("UIStroke", main)
-ms.Color = Color3.fromRGB(160, 40, 40)
 ms.Thickness = 2
+ms.Color = Color3.fromRGB(160, 40, 40)
 
 local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.fromScale(0.28, 1)
-sidebar.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+sidebar.Size = UDim2.fromScale(0.26, 1)
+sidebar.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
 sidebar.BorderSizePixel = 0
 sidebar.Parent = main
 
 local header = Instance.new("TextLabel")
-header.Size = UDim2.fromScale(1, 0.16)
+header.Size = UDim2.fromScale(1, 0.14)
 header.BackgroundTransparency = 1
 header.Text = "Krypth AJ"
 header.Font = Enum.Font.GothamBold
-header.TextSize = 22
-header.TextColor3 = Color3.fromRGB(255, 255, 255)
+header.TextSize = 20
+header.TextColor3 = Color3.fromRGB(245, 245, 245)
 header.Parent = sidebar
 
 local nav = Instance.new("Frame")
-nav.Size = UDim2.fromScale(1, 0.3)
-nav.Position = UDim2.fromScale(0, 0.2)
+nav.Size = UDim2.fromScale(1, 0.28)
+nav.Position = UDim2.fromScale(0, 0.18)
 nav.BackgroundTransparency = 1
 nav.Parent = sidebar
 
@@ -49,138 +50,147 @@ navLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
 local function navButton(text)
 	local b = Instance.new("TextButton")
-	b.Size = UDim2.fromScale(0.85, 0.28)
+	b.Size = UDim2.fromScale(0.85, 0.3)
 	b.BackgroundColor3 = Color3.fromRGB(140, 30, 30)
 	b.Text = text
 	b.Font = Enum.Font.GothamBold
-	b.TextSize = 14
+	b.TextSize = 13
 	b.TextColor3 = Color3.fromRGB(255, 255, 255)
 	b.BorderSizePixel = 0
 	Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
 	return b
 end
 
-local autoJoinBtn = navButton("AUTOJOIN")
-autoJoinBtn.Parent = nav
+local autoBtn = navButton("AUTOJOIN")
+autoBtn.Parent = nav
 
-local activityBtn = navButton("ACTIVITY")
-activityBtn.Parent = nav
+local actBtn = navButton("ACTIVITY")
+actBtn.Parent = nav
 
 local content = Instance.new("Frame")
-content.Size = UDim2.fromScale(0.72, 1)
-content.Position = UDim2.fromScale(0.28, 0)
-content.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+content.Size = UDim2.fromScale(0.74, 1)
+content.Position = UDim2.fromScale(0.26, 0)
+content.BackgroundColor3 = Color3.fromRGB(8, 8, 8)
 content.BorderSizePixel = 0
 content.Parent = main
 
-local topBar = Instance.new("Frame")
-topBar.Size = UDim2.fromScale(1, 0.12)
-topBar.BackgroundTransparency = 1
-topBar.Parent = content
+local top = Instance.new("Frame")
+top.Size = UDim2.fromScale(1, 0.12)
+top.BackgroundTransparency = 1
+top.Parent = content
 
 local title = Instance.new("TextLabel")
 title.Size = UDim2.fromScale(0.6, 1)
+title.Position = UDim2.fromScale(0.05, 0)
 title.BackgroundTransparency = 1
 title.Text = "ACTIVITY"
 title.Font = Enum.Font.GothamBold
-title.TextSize = 20
+title.TextSize = 18
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextXAlignment = Enum.TextXAlignment.Left
-title.Position = UDim2.fromScale(0.04, 0)
-title.Parent = topBar
+title.Parent = top
 
 local clear = Instance.new("TextButton")
-clear.Size = UDim2.fromScale(0.25, 0.55)
-clear.Position = UDim2.fromScale(0.7, 0.22)
+clear.Size = UDim2.fromScale(0.22, 0.6)
+clear.Position = UDim2.fromScale(0.73, 0.2)
 clear.BackgroundColor3 = Color3.fromRGB(140, 30, 30)
 clear.Text = "CLEAR ALL"
 clear.Font = Enum.Font.GothamBold
-clear.TextSize = 13
+clear.TextSize = 12
 clear.TextColor3 = Color3.fromRGB(255, 255, 255)
 clear.BorderSizePixel = 0
 Instance.new("UICorner", clear).CornerRadius = UDim.new(0, 8)
-clear.Parent = topBar
+clear.Parent = top
 
-local listFrame = Instance.new("ScrollingFrame")
-listFrame.Size = UDim2.fromScale(0.92, 0.82)
-listFrame.Position = UDim2.fromScale(0.04, 0.14)
-listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-listFrame.ScrollBarImageTransparency = 1
-listFrame.BackgroundTransparency = 1
-listFrame.Parent = content
+local list = Instance.new("ScrollingFrame")
+list.Size = UDim2.fromScale(0.92, 0.82)
+list.Position = UDim2.fromScale(0.04, 0.14)
+list.CanvasSize = UDim2.new()
+list.ScrollBarImageTransparency = 1
+list.BackgroundTransparency = 1
+list.Parent = content
 
-local listLayout = Instance.new("UIListLayout", listFrame)
-listLayout.Padding = UDim.new(0, 12)
+local layout = Instance.new("UIListLayout", list)
+layout.Padding = UDim.new(0, 10)
 
-listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	listFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	list.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 8)
 end)
 
-local function serverCard(data)
-	local card = Instance.new("Frame")
-	card.Size = UDim2.fromScale(1, 0.22)
-	card.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-	card.BorderSizePixel = 0
-	Instance.new("UICorner", card).CornerRadius = UDim.new(0, 10)
-	local cs = Instance.new("UIStroke", card)
-	cs.Color = Color3.fromRGB(140, 30, 30)
+local empty = Instance.new("TextLabel")
+empty.Size = UDim2.fromScale(1, 1)
+empty.BackgroundTransparency = 1
+empty.Text = "No good servers yet"
+empty.Font = Enum.Font.Gotham
+empty.TextSize = 14
+empty.TextColor3 = Color3.fromRGB(150, 150, 150)
+empty.Parent = list
 
-	local txt = Instance.new("TextLabel")
-	txt.Size = UDim2.fromScale(0.65, 0.6)
-	txt.Position = UDim2.fromScale(0.05, 0.1)
-	txt.BackgroundTransparency = 1
-	txt.TextWrapped = true
-	txt.TextXAlignment = Enum.TextXAlignment.Left
-	txt.Text = "MPS: "..data.mps
-	txt.Font = Enum.Font.Gotham
-	txt.TextSize = 14
-	txt.TextColor3 = Color3.fromRGB(230, 230, 230)
-	txt.Parent = card
+local function card(data)
+	local f = Instance.new("Frame")
+	f.Size = UDim2.fromScale(1, 0.2)
+	f.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+	f.BorderSizePixel = 0
+	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 10)
+	local s = Instance.new("UIStroke", f)
+	s.Color = Color3.fromRGB(140, 30, 30)
+
+	local t = Instance.new("TextLabel")
+	t.Size = UDim2.fromScale(0.6, 0.6)
+	t.Position = UDim2.fromScale(0.05, 0.2)
+	t.BackgroundTransparency = 1
+	t.TextWrapped = true
+	t.TextXAlignment = Enum.TextXAlignment.Left
+	t.Text = "MPS: "..data.mps.." | "..data.players.."/"..data.maxPlayers
+	t.Font = Enum.Font.Gotham
+	t.TextSize = 13
+	t.TextColor3 = Color3.fromRGB(230, 230, 230)
+	t.Parent = f
 
 	local join = Instance.new("TextButton")
-	join.Size = UDim2.fromScale(0.22, 0.32)
-	join.Position = UDim2.fromScale(0.72, 0.15)
+	join.Size = UDim2.fromScale(0.22, 0.35)
+	join.Position = UDim2.fromScale(0.7, 0.18)
 	join.BackgroundColor3 = Color3.fromRGB(40, 160, 80)
 	join.Text = "JOIN"
 	join.Font = Enum.Font.GothamBold
-	join.TextSize = 13
+	join.TextSize = 12
 	join.TextColor3 = Color3.fromRGB(255, 255, 255)
 	join.BorderSizePixel = 0
 	Instance.new("UICorner", join).CornerRadius = UDim.new(0, 6)
-	join.Parent = card
+	join.Parent = f
 
 	local del = Instance.new("TextButton")
-	del.Size = UDim2.fromScale(0.22, 0.32)
-	del.Position = UDim2.fromScale(0.72, 0.55)
+	del.Size = UDim2.fromScale(0.22, 0.35)
+	del.Position = UDim2.fromScale(0.7, 0.58)
 	del.BackgroundColor3 = Color3.fromRGB(160, 40, 40)
 	del.Text = "DEL"
 	del.Font = Enum.Font.GothamBold
-	del.TextSize = 13
+	del.TextSize = 12
 	del.TextColor3 = Color3.fromRGB(255, 255, 255)
 	del.BorderSizePixel = 0
 	Instance.new("UICorner", del).CornerRadius = UDim.new(0, 6)
-	del.Parent = card
+	del.Parent = f
 
 	join.MouseButton1Click:Connect(function()
 		TeleportService:TeleportToPlaceInstance(PLACE_ID, data.jobId, player)
 	end)
 
 	del.MouseButton1Click:Connect(function()
-		card:Destroy()
+		f:Destroy()
 	end)
 
-	return card
+	return f
 end
 
-local function loadServers()
-	for _, c in ipairs(listFrame:GetChildren()) do
+local function refresh()
+	for _, c in ipairs(list:GetChildren()) do
 		if c:IsA("Frame") then c:Destroy() end
 	end
+	empty.Visible = true
 
 	local ok, data = pcall(function()
 		return HttpService:JSONDecode(game:HttpGet(RELAY_URL))
 	end)
-
 	if not ok then return end
 
 	table.sort(data, function(a, b)
@@ -189,15 +199,47 @@ local function loadServers()
 
 	for _, s in ipairs(data) do
 		if s.placeId == PLACE_ID then
-			serverCard(s).Parent = listFrame
+			empty.Visible = false
+			card(s).Parent = list
 		end
 	end
 end
 
-autoJoinBtn.MouseButton1Click:Connect(loadServers)
 clear.MouseButton1Click:Connect(function()
-	for _, c in ipairs(listFrame:GetChildren()) do
+	for _, c in ipairs(list:GetChildren()) do
 		if c:IsA("Frame") then c:Destroy() end
+	end
+	empty.Visible = true
+end)
+
+autoBtn.MouseButton1Click:Connect(refresh)
+actBtn.MouseButton1Click:Connect(refresh)
+
+task.spawn(function()
+	while task.wait(8) do
+		if gui.Enabled then
+			refresh()
+		end
+	end
+end)
+
+local dragging, dragStart, startPos
+main.InputBegan:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = i.Position
+		startPos = main.Position
+	end
+end)
+UserInputService.InputEnded:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
+UserInputService.InputChanged:Connect(function(i)
+	if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = i.Position - dragStart
+		main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
 end)
 
@@ -208,4 +250,4 @@ UserInputService.InputBegan:Connect(function(i, g)
 	end
 end)
 
-loadServers()
+refresh()
