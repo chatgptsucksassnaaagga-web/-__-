@@ -11,167 +11,138 @@ local gui = Instance.new("ScreenGui")
 gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
-local main = Instance.new("Frame")
-main.Size = UDim2.fromScale(0.32, 0.62)
-main.Position = UDim2.fromScale(0.34, 0.19)
-main.BackgroundColor3 = Color3.fromRGB(14, 14, 14)
-main.BorderSizePixel = 0
-main.Parent = gui
-Instance.new("UICorner", main).CornerRadius = UDim.new(0, 12)
-local mainStroke = Instance.new("UIStroke", main)
-mainStroke.Color = Color3.fromRGB(130, 35, 35)
-mainStroke.Thickness = 1
+local root = Instance.new("Frame")
+root.Size = UDim2.fromScale(0.38, 0.75)
+root.Position = UDim2.fromScale(0.31, 0.12)
+root.BackgroundColor3 = Color3.fromRGB(10, 10, 12)
+root.BorderSizePixel = 0
+root.Parent = gui
+Instance.new("UICorner", root).CornerRadius = UDim.new(0, 14)
 
-local header = Instance.new("Frame")
-header.Size = UDim2.fromScale(1, 0.14)
-header.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
-header.BorderSizePixel = 0
-header.Parent = main
+local sidebar = Instance.new("Frame")
+sidebar.Size = UDim2.fromScale(0.22, 1)
+sidebar.BackgroundColor3 = Color3.fromRGB(14, 14, 18)
+sidebar.BorderSizePixel = 0
+sidebar.Parent = root
 
-local headerPad = Instance.new("UIPadding", header)
-headerPad.PaddingLeft = UDim.new(0, 18)
-headerPad.PaddingRight = UDim.new(0, 18)
+local sideStroke = Instance.new("UIStroke", sidebar)
+sideStroke.Color = Color3.fromRGB(120, 40, 40)
+sideStroke.Thickness = 1
 
-local title = Instance.new("TextLabel")
-title.Size = UDim2.fromScale(0.4, 1)
-title.BackgroundTransparency = 1
-title.Text = "Krypth AJ"
-title.Font = Enum.Font.GothamSemibold
-title.TextSize = 20
-title.TextColor3 = Color3.fromRGB(240, 240, 240)
-title.TextXAlignment = Enum.TextXAlignment.Left
-title.Parent = header
+local logo = Instance.new("TextLabel")
+logo.Size = UDim2.fromScale(1, 0.12)
+logo.BackgroundTransparency = 1
+logo.Text = "KRYPTH\nAJ"
+logo.Font = Enum.Font.GothamBold
+logo.TextSize = 20
+logo.TextColor3 = Color3.fromRGB(240, 240, 240)
+logo.Parent = sidebar
 
-local nav = Instance.new("Frame")
-nav.Size = UDim2.fromScale(0.6, 1)
-nav.Position = UDim2.fromScale(0.4, 0)
-nav.BackgroundTransparency = 1
-nav.Parent = header
+local sideList = Instance.new("UIListLayout", sidebar)
+sideList.Padding = UDim.new(0, 12)
+sideList.VerticalAlignment = Enum.VerticalAlignment.Top
 
-local navLayout = Instance.new("UIListLayout", nav)
-navLayout.FillDirection = Enum.FillDirection.Horizontal
-navLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-navLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-navLayout.Padding = UDim.new(0, 12)
-
-local function navButton(text)
+local function sideButton(text)
 	local b = Instance.new("TextButton")
-	b.Size = UDim2.fromScale(0.28, 0.55)
-	b.BackgroundColor3 = Color3.fromRGB(130, 35, 35)
+	b.Size = UDim2.fromScale(0.86, 0.065)
+	b.Position = UDim2.fromScale(0.07, 0)
+	b.BackgroundColor3 = Color3.fromRGB(120, 40, 40)
 	b.Text = text
 	b.Font = Enum.Font.GothamMedium
-	b.TextSize = 14
+	b.TextSize = 13
 	b.TextColor3 = Color3.fromRGB(255, 255, 255)
 	b.BorderSizePixel = 0
 	Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
 	return b
 end
 
-local autoBtn = navButton("AUTO JOIN")
-autoBtn.Parent = nav
+local autoBtn = sideButton("AUTO JOIN")
+autoBtn.Parent = sidebar
 
-local actBtn = navButton("ACTIVITY")
-actBtn.Parent = nav
+local refreshBtn = sideButton("REFRESH")
+refreshBtn.Parent = sidebar
 
-local content = Instance.new("Frame")
-content.Size = UDim2.fromScale(1, 0.86)
-content.Position = UDim2.fromScale(0, 0.14)
-content.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
-content.BorderSizePixel = 0
-content.Parent = main
+local clearBtn = sideButton("CLEAR LOGS")
+clearBtn.Parent = sidebar
 
-local sectionBar = Instance.new("Frame")
-sectionBar.Size = UDim2.fromScale(1, 0.1)
-sectionBar.BackgroundTransparency = 1
-sectionBar.Parent = content
+local main = Instance.new("Frame")
+main.Size = UDim2.fromScale(0.78, 1)
+main.Position = UDim2.fromScale(0.22, 0)
+main.BackgroundColor3 = Color3.fromRGB(8, 8, 10)
+main.BorderSizePixel = 0
+main.Parent = root
 
-local section = Instance.new("TextLabel")
-section.Size = UDim2.fromScale(0.6, 1)
-section.Position = UDim2.fromScale(0.06, 0)
-section.BackgroundTransparency = 1
-section.Text = "Activity"
-section.Font = Enum.Font.GothamSemibold
-section.TextSize = 16
-section.TextXAlignment = Enum.TextXAlignment.Left
-section.TextColor3 = Color3.fromRGB(220, 220, 220)
-section.Parent = sectionBar
+local header = Instance.new("Frame")
+header.Size = UDim2.fromScale(1, 0.1)
+header.BackgroundTransparency = 1
+header.Parent = main
 
-local clear = Instance.new("TextButton")
-clear.Size = UDim2.fromScale(0.18, 0.55)
-clear.Position = UDim2.fromScale(0.76, 0.22)
-clear.BackgroundColor3 = Color3.fromRGB(130, 35, 35)
-clear.Text = "CLEAR"
-clear.Font = Enum.Font.GothamMedium
-clear.TextSize = 13
-clear.TextColor3 = Color3.fromRGB(255, 255, 255)
-clear.BorderSizePixel = 0
-Instance.new("UICorner", clear).CornerRadius = UDim.new(0, 8)
-clear.Parent = sectionBar
+local headerText = Instance.new("TextLabel")
+headerText.Size = UDim2.fromScale(1, 1)
+headerText.BackgroundTransparency = 1
+headerText.Text = "SERVER ACTIVITY"
+headerText.Font = Enum.Font.GothamSemibold
+headerText.TextSize = 16
+headerText.TextColor3 = Color3.fromRGB(210, 210, 210)
+headerText.Parent = header
 
-local list = Instance.new("ScrollingFrame")
-list.Size = UDim2.fromScale(0.9, 0.86)
-list.Position = UDim2.fromScale(0.05, 0.12)
-list.CanvasSize = UDim2.new()
-list.ScrollBarImageTransparency = 1
-list.BackgroundTransparency = 1
-list.Parent = content
+local feed = Instance.new("ScrollingFrame")
+feed.Size = UDim2.fromScale(0.92, 0.86)
+feed.Position = UDim2.fromScale(0.04, 0.12)
+feed.CanvasSize = UDim2.new()
+feed.ScrollBarImageTransparency = 1
+feed.BackgroundTransparency = 1
+feed.Parent = main
 
-local listLayout = Instance.new("UIListLayout", list)
-listLayout.Padding = UDim.new(0, 14)
+local feedLayout = Instance.new("UIListLayout", feed)
+feedLayout.Padding = UDim.new(0, 10)
 
-listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	list.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+feedLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	feed.CanvasSize = UDim2.new(0, 0, 0, feedLayout.AbsoluteContentSize.Y + 10)
 end)
 
-local empty = Instance.new("TextLabel")
-empty.Size = UDim2.fromScale(1, 1)
-empty.BackgroundTransparency = 1
-empty.Text = "Waiting for good servers..."
-empty.Font = Enum.Font.Gotham
-empty.TextSize = 14
-empty.TextColor3 = Color3.fromRGB(150, 150, 150)
-empty.Parent = list
-
-local function card(data)
+local function logCard(data)
 	local f = Instance.new("Frame")
-	f.Size = UDim2.fromScale(1, 0.14)
-	f.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+	f.Size = UDim2.fromScale(1, 0.11)
+	f.BackgroundColor3 = Color3.fromRGB(16, 16, 20)
 	f.BorderSizePixel = 0
 	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 10)
+
 	local s = Instance.new("UIStroke", f)
-	s.Color = Color3.fromRGB(130, 35, 35)
+	s.Color = Color3.fromRGB(120, 40, 40)
 	s.Thickness = 1
 
-	local info = Instance.new("TextLabel")
-	info.Size = UDim2.fromScale(0.6, 1)
-	info.Position = UDim2.fromScale(0.05, 0)
-	info.BackgroundTransparency = 1
-	info.TextXAlignment = Enum.TextXAlignment.Left
-	info.Text = "MPS "..data.mps.."   |   "..data.players.."/"..data.maxPlayers
-	info.Font = Enum.Font.Gotham
-	info.TextSize = 14
-	info.TextColor3 = Color3.fromRGB(235, 235, 235)
-	info.Parent = f
+	local txt = Instance.new("TextLabel")
+	txt.Size = UDim2.fromScale(0.68, 1)
+	txt.Position = UDim2.fromScale(0.04, 0)
+	txt.BackgroundTransparency = 1
+	txt.TextXAlignment = Enum.TextXAlignment.Left
+	txt.TextWrapped = true
+	txt.Text = "MPS "..data.mps.." | "..data.players.."/"..data.maxPlayers
+	txt.Font = Enum.Font.Gotham
+	txt.TextSize = 13
+	txt.TextColor3 = Color3.fromRGB(235, 235, 235)
+	txt.Parent = f
 
 	local join = Instance.new("TextButton")
-	join.Size = UDim2.fromScale(0.22, 0.42)
-	join.Position = UDim2.fromScale(0.72, 0.12)
-	join.BackgroundColor3 = Color3.fromRGB(45, 150, 85)
+	join.Size = UDim2.fromScale(0.22, 0.38)
+	join.Position = UDim2.fromScale(0.73, 0.12)
+	join.BackgroundColor3 = Color3.fromRGB(50, 150, 90)
 	join.Text = "JOIN"
 	join.Font = Enum.Font.GothamMedium
-	join.TextSize = 13
+	join.TextSize = 12
 	join.TextColor3 = Color3.fromRGB(255, 255, 255)
 	join.BorderSizePixel = 0
 	Instance.new("UICorner", join).CornerRadius = UDim.new(0, 8)
 	join.Parent = f
 
 	local del = Instance.new("TextButton")
-	del.Size = UDim2.fromScale(0.22, 0.42)
-	del.Position = UDim2.fromScale(0.72, 0.52)
+	del.Size = UDim2.fromScale(0.22, 0.38)
+	del.Position = UDim2.fromScale(0.73, 0.52)
 	del.BackgroundColor3 = Color3.fromRGB(150, 45, 45)
 	del.Text = "DEL"
 	del.Font = Enum.Font.GothamMedium
-	del.TextSize = 13
+	del.TextSize = 12
 	del.TextColor3 = Color3.fromRGB(255, 255, 255)
 	del.BorderSizePixel = 0
 	Instance.new("UICorner", del).CornerRadius = UDim.new(0, 8)
@@ -188,11 +159,10 @@ local function card(data)
 	return f
 end
 
-local function refresh()
-	for _, c in ipairs(list:GetChildren()) do
+local function load()
+	for _, c in ipairs(feed:GetChildren()) do
 		if c:IsA("Frame") then c:Destroy() end
 	end
-	empty.Visible = true
 
 	local ok, data = pcall(function()
 		return HttpService:JSONDecode(game:HttpGet(RELAY_URL))
@@ -205,19 +175,17 @@ local function refresh()
 
 	for _, s in ipairs(data) do
 		if s.placeId == PLACE_ID then
-			empty.Visible = false
-			card(s).Parent = list
+			logCard(s).Parent = feed
 		end
 	end
 end
 
-autoBtn.MouseButton1Click:Connect(refresh)
-actBtn.MouseButton1Click:Connect(refresh)
-clear.MouseButton1Click:Connect(function()
-	for _, c in ipairs(list:GetChildren()) do
+autoBtn.MouseButton1Click:Connect(load)
+refreshBtn.MouseButton1Click:Connect(load)
+clearBtn.MouseButton1Click:Connect(function()
+	for _, c in ipairs(feed:GetChildren()) do
 		if c:IsA("Frame") then c:Destroy() end
 	end
-	empty.Visible = true
 end)
 
 UserInputService.InputBegan:Connect(function(i, g)
@@ -227,4 +195,4 @@ UserInputService.InputBegan:Connect(function(i, g)
 	end
 end)
 
-refresh()
+load()
