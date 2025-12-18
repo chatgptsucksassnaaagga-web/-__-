@@ -12,8 +12,8 @@ gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local main = Instance.new("Frame")
-main.Size = UDim2.fromScale(0.3, 0.38)
-main.Position = UDim2.fromScale(0.35, 0.31)
+main.Size = UDim2.fromScale(0.28, 0.55)
+main.Position = UDim2.fromScale(0.36, 0.22)
 main.BackgroundColor3 = Color3.fromRGB(14, 14, 14)
 main.BorderSizePixel = 0
 main.Parent = gui
@@ -23,30 +23,33 @@ mainStroke.Color = Color3.fromRGB(120, 30, 30)
 mainStroke.Thickness = 1
 
 local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.fromScale(0.25, 1)
+sidebar.Size = UDim2.fromScale(1, 0.18)
 sidebar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 sidebar.BorderSizePixel = 0
 sidebar.Parent = main
 
 local sideLayout = Instance.new("UIListLayout", sidebar)
-sideLayout.Padding = UDim.new(0, 6)
+sideLayout.FillDirection = Enum.FillDirection.Horizontal
 sideLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+sideLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+sideLayout.Padding = UDim.new(0, 10)
 
 local sidePad = Instance.new("UIPadding", sidebar)
 sidePad.PaddingTop = UDim.new(0, 8)
+sidePad.PaddingBottom = UDim.new(0, 8)
 
 local title = Instance.new("TextLabel")
-title.Size = UDim2.fromScale(1, 0.12)
+title.Size = UDim2.fromScale(0.35, 1)
 title.BackgroundTransparency = 1
 title.Text = "Krypth AJ"
 title.Font = Enum.Font.GothamSemibold
-title.TextSize = 15
+title.TextSize = 16
 title.TextColor3 = Color3.fromRGB(235, 235, 235)
 title.Parent = sidebar
 
 local function nav(text)
 	local b = Instance.new("TextButton")
-	b.Size = UDim2.fromScale(0.85, 0.14)
+	b.Size = UDim2.fromScale(0.28, 0.7)
 	b.BackgroundColor3 = Color3.fromRGB(120, 30, 30)
 	b.Text = text
 	b.Font = Enum.Font.GothamMedium
@@ -64,20 +67,20 @@ local actBtn = nav("Activity")
 actBtn.Parent = sidebar
 
 local content = Instance.new("Frame")
-content.Size = UDim2.fromScale(0.75, 1)
-content.Position = UDim2.fromScale(0.25, 0)
+content.Size = UDim2.fromScale(1, 0.82)
+content.Position = UDim2.fromScale(0, 0.18)
 content.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
 content.BorderSizePixel = 0
 content.Parent = main
 
 local top = Instance.new("Frame")
-top.Size = UDim2.fromScale(1, 0.14)
+top.Size = UDim2.fromScale(1, 0.1)
 top.BackgroundTransparency = 1
 top.Parent = content
 
 local section = Instance.new("TextLabel")
 section.Size = UDim2.fromScale(0.6, 1)
-section.Position = UDim2.fromScale(0.05, 0)
+section.Position = UDim2.fromScale(0.06, 0)
 section.BackgroundTransparency = 1
 section.Text = "Activity"
 section.Font = Enum.Font.GothamSemibold
@@ -87,8 +90,8 @@ section.TextColor3 = Color3.fromRGB(220, 220, 220)
 section.Parent = top
 
 local clear = Instance.new("TextButton")
-clear.Size = UDim2.fromScale(0.22, 0.45)
-clear.Position = UDim2.fromScale(0.72, 0.28)
+clear.Size = UDim2.fromScale(0.2, 0.5)
+clear.Position = UDim2.fromScale(0.74, 0.25)
 clear.BackgroundColor3 = Color3.fromRGB(120, 30, 30)
 clear.Text = "Clear"
 clear.Font = Enum.Font.GothamMedium
@@ -99,24 +102,24 @@ Instance.new("UICorner", clear).CornerRadius = UDim.new(0, 6)
 clear.Parent = top
 
 local list = Instance.new("ScrollingFrame")
-list.Size = UDim2.fromScale(0.9, 0.8)
-list.Position = UDim2.fromScale(0.05, 0.16)
+list.Size = UDim2.fromScale(0.9, 0.85)
+list.Position = UDim2.fromScale(0.05, 0.12)
 list.CanvasSize = UDim2.new()
 list.ScrollBarImageTransparency = 1
 list.BackgroundTransparency = 1
 list.Parent = content
 
 local listLayout = Instance.new("UIListLayout", list)
-listLayout.Padding = UDim.new(0, 8)
+listLayout.Padding = UDim.new(0, 10)
 
 listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	list.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 6)
+	list.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 8)
 end)
 
 local empty = Instance.new("TextLabel")
 empty.Size = UDim2.fromScale(1, 1)
 empty.BackgroundTransparency = 1
-empty.Text = "No good servers"
+empty.Text = "No good servers yet"
 empty.Font = Enum.Font.Gotham
 empty.TextSize = 12
 empty.TextColor3 = Color3.fromRGB(140, 140, 140)
@@ -124,7 +127,7 @@ empty.Parent = list
 
 local function card(data)
 	local f = Instance.new("Frame")
-	f.Size = UDim2.fromScale(1, 0.18)
+	f.Size = UDim2.fromScale(1, 0.16)
 	f.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 	f.BorderSizePixel = 0
 	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 8)
@@ -133,7 +136,7 @@ local function card(data)
 	s.Thickness = 1
 
 	local info = Instance.new("TextLabel")
-	info.Size = UDim2.fromScale(0.62, 1)
+	info.Size = UDim2.fromScale(0.6, 1)
 	info.Position = UDim2.fromScale(0.05, 0)
 	info.BackgroundTransparency = 1
 	info.TextXAlignment = Enum.TextXAlignment.Left
@@ -144,8 +147,8 @@ local function card(data)
 	info.Parent = f
 
 	local join = Instance.new("TextButton")
-	join.Size = UDim2.fromScale(0.22, 0.38)
-	join.Position = UDim2.fromScale(0.72, 0.15)
+	join.Size = UDim2.fromScale(0.24, 0.4)
+	join.Position = UDim2.fromScale(0.7, 0.12)
 	join.BackgroundColor3 = Color3.fromRGB(40, 140, 80)
 	join.Text = "Join"
 	join.Font = Enum.Font.GothamMedium
@@ -156,8 +159,8 @@ local function card(data)
 	join.Parent = f
 
 	local del = Instance.new("TextButton")
-	del.Size = UDim2.fromScale(0.22, 0.38)
-	del.Position = UDim2.fromScale(0.72, 0.55)
+	del.Size = UDim2.fromScale(0.24, 0.4)
+	del.Position = UDim2.fromScale(0.7, 0.52)
 	del.BackgroundColor3 = Color3.fromRGB(140, 40, 40)
 	del.Text = "Del"
 	del.Font = Enum.Font.GothamMedium
