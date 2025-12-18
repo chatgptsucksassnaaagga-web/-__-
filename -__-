@@ -1,237 +1,153 @@
-local G2L = {};
+local G2L = {}
 
--- StarterGui.ScreenGui
-G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
-G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
+G2L["1"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+G2L["2"] = Instance.new("Frame", G2L["1"])
+G2L["2"].BorderSizePixel = 0
+G2L["2"].BackgroundColor3 = Color3.fromRGB(27,27,27)
+G2L["2"].Size = UDim2.new(0,277,0,374)
+G2L["2"].Position = UDim2.new(0.39641,0,0.1684,0)
+G2L["2"].BackgroundTransparency = 0.03
+G2L["2"].Name = "Whole frame"
 
--- StarterGui.ScreenGui.Whole frame
-G2L["2"] = Instance.new("Frame", G2L["1"]);
-G2L["2"]["BorderSizePixel"] = 0;
-G2L["2"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
-G2L["2"]["Size"] = UDim2.new(0, 277, 0, 374);
-G2L["2"]["Position"] = UDim2.new(0.39641, 0, 0.1684, 0);
-G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["2"]["Name"] = [[Whole frame]];
-G2L["2"]["BackgroundTransparency"] = 0.03;
+Instance.new("UIDragDetector", G2L["2"])
+Instance.new("UICorner", G2L["2"]).CornerRadius = UDim.new(0,2)
+local ws = Instance.new("UIStroke", G2L["2"])
+ws.Thickness = 2
+ws.Color = Color3.fromRGB(237,40,0)
 
+G2L["6"] = Instance.new("Frame", G2L["2"])
+G2L["6"].BorderSizePixel = 0
+G2L["6"].BackgroundColor3 = Color3.fromRGB(0,0,0)
+G2L["6"].Size = UDim2.new(0,189,0,374)
+G2L["6"].Position = UDim2.new(0.31769,0,0,0)
+G2L["6"].BackgroundTransparency = 0.4
+G2L["6"].Name = "Log frame"
 
--- StarterGui.ScreenGui.Whole frame.UIDragDetector
-G2L["3"] = Instance.new("UIDragDetector", G2L["2"]);
+G2L["7"] = Instance.new("Frame", G2L["6"])
+G2L["7"].Size = UDim2.new(0,176,0,55)
+G2L["7"].Position = UDim2.new(0.03175,0,0.02406,0)
+G2L["7"].BackgroundColor3 = Color3.fromRGB(199,31,0)
+G2L["7"].Name = "LOG"
 
+Instance.new("UICorner", G2L["7"]).CornerRadius = UDim.new(0,4)
+local ls = Instance.new("UIStroke", G2L["7"])
+ls.Thickness = 2
+ls.Color = Color3.fromRGB(117,0,0)
 
+G2L["a"] = Instance.new("TextLabel", G2L["7"])
+G2L["a"].Size = UDim2.new(0,37,0,16)
+G2L["a"].Position = UDim2.new(0,0,0.56364,0)
+G2L["a"].BackgroundTransparency = 1
+G2L["a"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["a"].TextSize = 20
+G2L["a"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["a"].Text = "MPS"
+G2L["a"].Name = "MPS"
 
--- StarterGui.ScreenGui.Whole frame.UICorner
-G2L["4"] = Instance.new("UICorner", G2L["2"]);
-G2L["4"]["CornerRadius"] = UDim.new(0, 2);
+G2L["b"] = Instance.new("TextLabel", G2L["7"])
+G2L["b"].Size = UDim2.new(0,93,0,16)
+G2L["b"].Position = UDim2.new(0,0,0.12727,0)
+G2L["b"].BackgroundTransparency = 1
+G2L["b"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["b"].TextSize = 20
+G2L["b"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["b"].Text = "Brainrot name"
+G2L["b"].Name = "Brainrot name"
 
+G2L["c"] = Instance.new("TextButton", G2L["7"])
+G2L["c"].Size = UDim2.new(0,68,0,40)
+G2L["c"].Position = UDim2.new(0.56818,0,0.12727,0)
+G2L["c"].BackgroundColor3 = Color3.fromRGB(199,31,0)
+G2L["c"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["c"].TextSize = 22
+G2L["c"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["c"].Text = "JOIN"
+G2L["c"].Name = "Join button"
+Instance.new("UICorner", G2L["c"]).CornerRadius = UDim.new(0,2)
+local js = Instance.new("UIStroke", G2L["c"])
+js.Thickness = 2
+js.Color = Color3.fromRGB(237,40,0)
 
--- StarterGui.ScreenGui.Whole frame.UIStroke
-G2L["5"] = Instance.new("UIStroke", G2L["2"]);
-G2L["5"]["Thickness"] = 2;
-G2L["5"]["Color"] = Color3.fromRGB(237, 40, 0);
-G2L["5"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
+G2L["f"] = Instance.new("TextButton", G2L["2"])
+G2L["f"].Size = UDim2.new(0,76,0,31)
+G2L["f"].Position = UDim2.new(0.02166,0,0.02406,0)
+G2L["f"].BackgroundColor3 = Color3.fromRGB(199,31,0)
+G2L["f"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["f"].TextSize = 22
+G2L["f"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["f"].Text = "REFRESH"
+G2L["f"].Name = "Refresh Button"
 
+G2L["12"] = Instance.new("TextButton", G2L["2"])
+G2L["12"].Size = UDim2.new(0,76,0,31)
+G2L["12"].Position = UDim2.new(0.02166,0,0.23529,0)
+G2L["12"].BackgroundColor3 = Color3.fromRGB(199,31,0)
+G2L["12"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["12"].TextSize = 21
+G2L["12"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["12"].Text = "CLEAR"
 
--- StarterGui.ScreenGui.Whole frame.Log frame
-G2L["6"] = Instance.new("Frame", G2L["2"]);
-G2L["6"]["BorderSizePixel"] = 0;
-G2L["6"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["6"]["Size"] = UDim2.new(0, 189, 0, 374);
-G2L["6"]["Position"] = UDim2.new(0.31769, 0, 0, 0);
-G2L["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["6"]["Name"] = [[Log frame]];
-G2L["6"]["BackgroundTransparency"] = 0.4;
+G2L["16"] = Instance.new("TextButton", G2L["2"])
+G2L["16"].Size = UDim2.new(0,76,0,31)
+G2L["16"].Position = UDim2.new(0.02166,0,0.12834,0)
+G2L["16"].BackgroundColor3 = Color3.fromRGB(199,31,0)
+G2L["16"].TextColor3 = Color3.fromRGB(255,255,255)
+G2L["16"].TextSize = 20
+G2L["16"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
+G2L["16"].Text = "AUTO JOIN"
 
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local PLACE_ID = game.PlaceId
+local RELAY_URL = "https://YOUR_RELAY_URL/servers"
 
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG
-G2L["7"] = Instance.new("Frame", G2L["6"]);
-G2L["7"]["BorderSizePixel"] = 0;
-G2L["7"]["BackgroundColor3"] = Color3.fromRGB(199, 31, 0);
-G2L["7"]["Size"] = UDim2.new(0, 176, 0, 55);
-G2L["7"]["Position"] = UDim2.new(0.03175, 0, 0.02406, 0);
-G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["7"]["Name"] = [[LOG]];
+local template = G2L["7"]
+template.Visible = false
 
+local function clearLogs()
+	for _,v in ipairs(G2L["6"]:GetChildren()) do
+		if v:IsA("Frame") and v ~= template then
+			v:Destroy()
+		end
+	end
+end
 
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.UICorner
-G2L["8"] = Instance.new("UICorner", G2L["7"]);
-G2L["8"]["CornerRadius"] = UDim.new(0, 4);
+local function addLog(data,y)
+	local f = template:Clone()
+	f.Visible = true
+	f.Position = UDim2.new(0.03175,0,0,y)
+	f.Parent = G2L["6"]
+	f["Brainrot name"].Text = data.brainrot or "Unknown"
+	f.MPS.Text = tostring(data.mps)
+	f["Join button"].MouseButton1Click:Connect(function()
+		TeleportService:TeleportToPlaceInstance(PLACE_ID,data.jobId,player)
+	end)
+end
 
+local function refresh()
+	clearLogs()
+	local ok,res = pcall(function()
+		return HttpService:JSONDecode(game:HttpGet(RELAY_URL))
+	end)
+	if not ok then return end
+	table.sort(res,function(a,b) return (a.mps or 0) > (b.mps or 0) end)
+	local y = 0.02406
+	for _,s in ipairs(res) do
+		if s.placeId == PLACE_ID then
+			addLog(s,y)
+			y += 0.17
+		end
+	end
+end
 
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.UIStroke
-G2L["9"] = Instance.new("UIStroke", G2L["7"]);
-G2L["9"]["Thickness"] = 2;
-G2L["9"]["Color"] = Color3.fromRGB(117, 0, 0);
-G2L["9"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
+G2L["f"].MouseButton1Click:Connect(refresh)
+G2L["12"].MouseButton1Click:Connect(clearLogs)
+G2L["16"].MouseButton1Click:Connect(refresh)
 
+refresh()
 
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.MPS
-G2L["a"] = Instance.new("TextLabel", G2L["7"]);
-G2L["a"]["BorderSizePixel"] = 0;
-G2L["a"]["TextSize"] = 20;
-G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["a"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["a"]["BackgroundTransparency"] = 1;
-G2L["a"]["Size"] = UDim2.new(0, 37, 0, 16);
-G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["a"]["Text"] = [[MPS]];
-G2L["a"]["Name"] = [[MPS]];
-G2L["a"]["Position"] = UDim2.new(0, 0, 0.56364, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.Brainrot name
-G2L["b"] = Instance.new("TextLabel", G2L["7"]);
-G2L["b"]["BorderSizePixel"] = 0;
-G2L["b"]["TextSize"] = 20;
-G2L["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["b"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["b"]["BackgroundTransparency"] = 1;
-G2L["b"]["Size"] = UDim2.new(0, 93, 0, 16);
-G2L["b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["b"]["Text"] = [[Brainrot name]];
-G2L["b"]["Name"] = [[Brainrot name]];
-G2L["b"]["Position"] = UDim2.new(0, 0, 0.12727, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.Join button
-G2L["c"] = Instance.new("TextButton", G2L["7"]);
-G2L["c"]["BorderSizePixel"] = 0;
-G2L["c"]["TextSize"] = 22;
-G2L["c"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["c"]["BackgroundColor3"] = Color3.fromRGB(199, 31, 0);
-G2L["c"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["c"]["Size"] = UDim2.new(0, 68, 0, 40);
-G2L["c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["c"]["Text"] = [[JOIN]];
-G2L["c"]["Name"] = [[Join button]];
-G2L["c"]["Position"] = UDim2.new(0.56818, 0, 0.12727, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.Join button.UIStroke
-G2L["d"] = Instance.new("UIStroke", G2L["c"]);
-G2L["d"]["Thickness"] = 2;
-G2L["d"]["Color"] = Color3.fromRGB(237, 40, 0);
-G2L["d"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["d"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
-
-
--- StarterGui.ScreenGui.Whole frame.Log frame.LOG.Join button.UICorner
-G2L["e"] = Instance.new("UICorner", G2L["c"]);
-G2L["e"]["CornerRadius"] = UDim.new(0, 2);
-
-
--- StarterGui.ScreenGui.Whole frame.Refresh Button
-G2L["f"] = Instance.new("TextButton", G2L["2"]);
-G2L["f"]["BorderSizePixel"] = 0;
-G2L["f"]["TextSize"] = 22;
-G2L["f"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["f"]["BackgroundColor3"] = Color3.fromRGB(199, 31, 0);
-G2L["f"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["f"]["Size"] = UDim2.new(0, 76, 0, 31);
-G2L["f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["f"]["Text"] = [[REFRESH]];
-G2L["f"]["Name"] = [[Refresh Button]];
-G2L["f"]["Position"] = UDim2.new(0.02166, 0, 0.02406, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Refresh Button.UIStroke
-G2L["10"] = Instance.new("UIStroke", G2L["f"]);
-G2L["10"]["Thickness"] = 2;
-G2L["10"]["Color"] = Color3.fromRGB(237, 40, 0);
-G2L["10"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["10"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
-
-
--- StarterGui.ScreenGui.Whole frame.Refresh Button.UICorner
-G2L["11"] = Instance.new("UICorner", G2L["f"]);
-G2L["11"]["CornerRadius"] = UDim.new(0, 2);
-
-
--- StarterGui.ScreenGui.Whole frame.TextButton
-G2L["12"] = Instance.new("TextButton", G2L["2"]);
-G2L["12"]["BorderSizePixel"] = 0;
-G2L["12"]["TextSize"] = 21;
-G2L["12"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["12"]["BackgroundColor3"] = Color3.fromRGB(199, 31, 0);
-G2L["12"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["12"]["Size"] = UDim2.new(0, 76, 0, 31);
-G2L["12"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["12"]["Text"] = [[CLEAR]];
-G2L["12"]["Position"] = UDim2.new(0.02166, 0, 0.23529, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.TextButton.UIStroke
-G2L["13"] = Instance.new("UIStroke", G2L["12"]);
-G2L["13"]["Thickness"] = 2;
-G2L["13"]["Color"] = Color3.fromRGB(237, 40, 0);
-G2L["13"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["13"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
-
-
--- StarterGui.ScreenGui.Whole frame.TextButton.UICorner
-G2L["14"] = Instance.new("UICorner", G2L["12"]);
-G2L["14"]["CornerRadius"] = UDim.new(0, 2);
-
-
--- StarterGui.ScreenGui.Whole frame.Title
-G2L["15"] = Instance.new("TextLabel", G2L["2"]);
-G2L["15"]["BorderSizePixel"] = 0;
-G2L["15"]["TextSize"] = 20;
-G2L["15"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["15"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["15"]["BackgroundTransparency"] = 1;
-G2L["15"]["Size"] = UDim2.new(0, 74, 0, 32);
-G2L["15"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["15"]["Text"] = [[Krypth AJ]];
-G2L["15"]["Name"] = [[Title]];
-G2L["15"]["Position"] = UDim2.new(-0.03971, 0, -0.08556, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Auto join
-G2L["16"] = Instance.new("TextButton", G2L["2"]);
-G2L["16"]["BorderSizePixel"] = 0;
-G2L["16"]["TextSize"] = 20;
-G2L["16"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["16"]["BackgroundColor3"] = Color3.fromRGB(199, 31, 0);
-G2L["16"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["16"]["Size"] = UDim2.new(0, 76, 0, 31);
-G2L["16"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["16"]["Text"] = [[AUTO JOIN]];
-G2L["16"]["Name"] = [[Auto join]];
-G2L["16"]["Position"] = UDim2.new(0.02166, 0, 0.12834, 0);
-
-
--- StarterGui.ScreenGui.Whole frame.Auto join.UIStroke
-G2L["17"] = Instance.new("UIStroke", G2L["16"]);
-G2L["17"]["Thickness"] = 2;
-G2L["17"]["Color"] = Color3.fromRGB(237, 40, 0);
-G2L["17"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["17"]["LineJoinMode"] = Enum.LineJoinMode.Miter;
-
-
--- StarterGui.ScreenGui.Whole frame.Auto join.UICorner
-G2L["18"] = Instance.new("UICorner", G2L["16"]);
-G2L["18"]["CornerRadius"] = UDim.new(0, 2);
-
-
--- StarterGui.ScreenGui.Whole frame.LOGS
-G2L["19"] = Instance.new("TextLabel", G2L["2"]);
-G2L["19"]["BorderSizePixel"] = 0;
-G2L["19"]["TextSize"] = 22;
-G2L["19"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["19"]["FontFace"] = Font.new([[rbxasset://fonts/families/TitilliumWeb.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-G2L["19"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["19"]["BackgroundTransparency"] = 1;
-G2L["19"]["Size"] = UDim2.new(0, 57, 0, 18);
-G2L["19"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["19"]["Text"] = [[LOGS]];
-G2L["19"]["Name"] = [[LOGS]];
-G2L["19"]["Position"] = UDim2.new(0.54152, 0, -0.04813, 0);
-
-
-
-return G2L["1"], require;
+return G2L["1"]
