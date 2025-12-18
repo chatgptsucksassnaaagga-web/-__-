@@ -2,7 +2,6 @@ local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
 local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 local RELAY_URL = "https://YOUR_RELAY_URL/servers"
@@ -13,159 +12,156 @@ gui.ResetOnSpawn = false
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local main = Instance.new("Frame")
-main.Size = UDim2.fromScale(0.34, 0.46)
-main.Position = UDim2.fromScale(0.33, 0.27)
-main.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+main.Size = UDim2.fromScale(0.3, 0.38)
+main.Position = UDim2.fromScale(0.35, 0.31)
+main.BackgroundColor3 = Color3.fromRGB(14, 14, 14)
 main.BorderSizePixel = 0
 main.Parent = gui
-Instance.new("UICorner", main).CornerRadius = UDim.new(0, 14)
-local ms = Instance.new("UIStroke", main)
-ms.Thickness = 2
-ms.Color = Color3.fromRGB(160, 40, 40)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
+local mainStroke = Instance.new("UIStroke", main)
+mainStroke.Color = Color3.fromRGB(120, 30, 30)
+mainStroke.Thickness = 1
 
 local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.fromScale(0.26, 1)
-sidebar.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+sidebar.Size = UDim2.fromScale(0.25, 1)
+sidebar.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 sidebar.BorderSizePixel = 0
 sidebar.Parent = main
 
-local header = Instance.new("TextLabel")
-header.Size = UDim2.fromScale(1, 0.14)
-header.BackgroundTransparency = 1
-header.Text = "Krypth AJ"
-header.Font = Enum.Font.GothamBold
-header.TextSize = 20
-header.TextColor3 = Color3.fromRGB(245, 245, 245)
-header.Parent = sidebar
+local sideLayout = Instance.new("UIListLayout", sidebar)
+sideLayout.Padding = UDim.new(0, 6)
+sideLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
-local nav = Instance.new("Frame")
-nav.Size = UDim2.fromScale(1, 0.28)
-nav.Position = UDim2.fromScale(0, 0.18)
-nav.BackgroundTransparency = 1
-nav.Parent = sidebar
+local sidePad = Instance.new("UIPadding", sidebar)
+sidePad.PaddingTop = UDim.new(0, 8)
 
-local navLayout = Instance.new("UIListLayout", nav)
-navLayout.Padding = UDim.new(0, 10)
-navLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+local title = Instance.new("TextLabel")
+title.Size = UDim2.fromScale(1, 0.12)
+title.BackgroundTransparency = 1
+title.Text = "Krypth AJ"
+title.Font = Enum.Font.GothamSemibold
+title.TextSize = 15
+title.TextColor3 = Color3.fromRGB(235, 235, 235)
+title.Parent = sidebar
 
-local function navButton(text)
+local function nav(text)
 	local b = Instance.new("TextButton")
-	b.Size = UDim2.fromScale(0.85, 0.3)
-	b.BackgroundColor3 = Color3.fromRGB(140, 30, 30)
+	b.Size = UDim2.fromScale(0.85, 0.14)
+	b.BackgroundColor3 = Color3.fromRGB(120, 30, 30)
 	b.Text = text
-	b.Font = Enum.Font.GothamBold
-	b.TextSize = 13
+	b.Font = Enum.Font.GothamMedium
+	b.TextSize = 12
 	b.TextColor3 = Color3.fromRGB(255, 255, 255)
 	b.BorderSizePixel = 0
-	Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
+	Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6)
 	return b
 end
 
-local autoBtn = navButton("AUTOJOIN")
-autoBtn.Parent = nav
+local autoBtn = nav("Auto Join")
+autoBtn.Parent = sidebar
 
-local actBtn = navButton("ACTIVITY")
-actBtn.Parent = nav
+local actBtn = nav("Activity")
+actBtn.Parent = sidebar
 
 local content = Instance.new("Frame")
-content.Size = UDim2.fromScale(0.74, 1)
-content.Position = UDim2.fromScale(0.26, 0)
-content.BackgroundColor3 = Color3.fromRGB(8, 8, 8)
+content.Size = UDim2.fromScale(0.75, 1)
+content.Position = UDim2.fromScale(0.25, 0)
+content.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
 content.BorderSizePixel = 0
 content.Parent = main
 
 local top = Instance.new("Frame")
-top.Size = UDim2.fromScale(1, 0.12)
+top.Size = UDim2.fromScale(1, 0.14)
 top.BackgroundTransparency = 1
 top.Parent = content
 
-local title = Instance.new("TextLabel")
-title.Size = UDim2.fromScale(0.6, 1)
-title.Position = UDim2.fromScale(0.05, 0)
-title.BackgroundTransparency = 1
-title.Text = "ACTIVITY"
-title.Font = Enum.Font.GothamBold
-title.TextSize = 18
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextXAlignment = Enum.TextXAlignment.Left
-title.Parent = top
+local section = Instance.new("TextLabel")
+section.Size = UDim2.fromScale(0.6, 1)
+section.Position = UDim2.fromScale(0.05, 0)
+section.BackgroundTransparency = 1
+section.Text = "Activity"
+section.Font = Enum.Font.GothamSemibold
+section.TextSize = 14
+section.TextXAlignment = Enum.TextXAlignment.Left
+section.TextColor3 = Color3.fromRGB(220, 220, 220)
+section.Parent = top
 
 local clear = Instance.new("TextButton")
-clear.Size = UDim2.fromScale(0.22, 0.6)
-clear.Position = UDim2.fromScale(0.73, 0.2)
-clear.BackgroundColor3 = Color3.fromRGB(140, 30, 30)
-clear.Text = "CLEAR ALL"
-clear.Font = Enum.Font.GothamBold
-clear.TextSize = 12
+clear.Size = UDim2.fromScale(0.22, 0.45)
+clear.Position = UDim2.fromScale(0.72, 0.28)
+clear.BackgroundColor3 = Color3.fromRGB(120, 30, 30)
+clear.Text = "Clear"
+clear.Font = Enum.Font.GothamMedium
+clear.TextSize = 11
 clear.TextColor3 = Color3.fromRGB(255, 255, 255)
 clear.BorderSizePixel = 0
-Instance.new("UICorner", clear).CornerRadius = UDim.new(0, 8)
+Instance.new("UICorner", clear).CornerRadius = UDim.new(0, 6)
 clear.Parent = top
 
 local list = Instance.new("ScrollingFrame")
-list.Size = UDim2.fromScale(0.92, 0.82)
-list.Position = UDim2.fromScale(0.04, 0.14)
+list.Size = UDim2.fromScale(0.9, 0.8)
+list.Position = UDim2.fromScale(0.05, 0.16)
 list.CanvasSize = UDim2.new()
 list.ScrollBarImageTransparency = 1
 list.BackgroundTransparency = 1
 list.Parent = content
 
-local layout = Instance.new("UIListLayout", list)
-layout.Padding = UDim.new(0, 10)
+local listLayout = Instance.new("UIListLayout", list)
+listLayout.Padding = UDim.new(0, 8)
 
-layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	list.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 8)
+listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	list.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 6)
 end)
 
 local empty = Instance.new("TextLabel")
 empty.Size = UDim2.fromScale(1, 1)
 empty.BackgroundTransparency = 1
-empty.Text = "No good servers yet"
+empty.Text = "No good servers"
 empty.Font = Enum.Font.Gotham
-empty.TextSize = 14
-empty.TextColor3 = Color3.fromRGB(150, 150, 150)
+empty.TextSize = 12
+empty.TextColor3 = Color3.fromRGB(140, 140, 140)
 empty.Parent = list
 
 local function card(data)
 	local f = Instance.new("Frame")
-	f.Size = UDim2.fromScale(1, 0.2)
-	f.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+	f.Size = UDim2.fromScale(1, 0.18)
+	f.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
 	f.BorderSizePixel = 0
-	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 10)
+	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 8)
 	local s = Instance.new("UIStroke", f)
-	s.Color = Color3.fromRGB(140, 30, 30)
+	s.Color = Color3.fromRGB(120, 30, 30)
+	s.Thickness = 1
 
-	local t = Instance.new("TextLabel")
-	t.Size = UDim2.fromScale(0.6, 0.6)
-	t.Position = UDim2.fromScale(0.05, 0.2)
-	t.BackgroundTransparency = 1
-	t.TextWrapped = true
-	t.TextXAlignment = Enum.TextXAlignment.Left
-	t.Text = "MPS: "..data.mps.." | "..data.players.."/"..data.maxPlayers
-	t.Font = Enum.Font.Gotham
-	t.TextSize = 13
-	t.TextColor3 = Color3.fromRGB(230, 230, 230)
-	t.Parent = f
+	local info = Instance.new("TextLabel")
+	info.Size = UDim2.fromScale(0.62, 1)
+	info.Position = UDim2.fromScale(0.05, 0)
+	info.BackgroundTransparency = 1
+	info.TextXAlignment = Enum.TextXAlignment.Left
+	info.Text = "MPS "..data.mps.."  |  "..data.players.."/"..data.maxPlayers
+	info.Font = Enum.Font.Gotham
+	info.TextSize = 12
+	info.TextColor3 = Color3.fromRGB(230, 230, 230)
+	info.Parent = f
 
 	local join = Instance.new("TextButton")
-	join.Size = UDim2.fromScale(0.22, 0.35)
-	join.Position = UDim2.fromScale(0.7, 0.18)
-	join.BackgroundColor3 = Color3.fromRGB(40, 160, 80)
-	join.Text = "JOIN"
-	join.Font = Enum.Font.GothamBold
-	join.TextSize = 12
+	join.Size = UDim2.fromScale(0.22, 0.38)
+	join.Position = UDim2.fromScale(0.72, 0.15)
+	join.BackgroundColor3 = Color3.fromRGB(40, 140, 80)
+	join.Text = "Join"
+	join.Font = Enum.Font.GothamMedium
+	join.TextSize = 11
 	join.TextColor3 = Color3.fromRGB(255, 255, 255)
 	join.BorderSizePixel = 0
 	Instance.new("UICorner", join).CornerRadius = UDim.new(0, 6)
 	join.Parent = f
 
 	local del = Instance.new("TextButton")
-	del.Size = UDim2.fromScale(0.22, 0.35)
-	del.Position = UDim2.fromScale(0.7, 0.58)
-	del.BackgroundColor3 = Color3.fromRGB(160, 40, 40)
-	del.Text = "DEL"
-	del.Font = Enum.Font.GothamBold
-	del.TextSize = 12
+	del.Size = UDim2.fromScale(0.22, 0.38)
+	del.Position = UDim2.fromScale(0.72, 0.55)
+	del.BackgroundColor3 = Color3.fromRGB(140, 40, 40)
+	del.Text = "Del"
+	del.Font = Enum.Font.GothamMedium
+	del.TextSize = 11
 	del.TextColor3 = Color3.fromRGB(255, 255, 255)
 	del.BorderSizePixel = 0
 	Instance.new("UICorner", del).CornerRadius = UDim.new(0, 6)
@@ -205,42 +201,13 @@ local function refresh()
 	end
 end
 
+autoBtn.MouseButton1Click:Connect(refresh)
+actBtn.MouseButton1Click:Connect(refresh)
 clear.MouseButton1Click:Connect(function()
 	for _, c in ipairs(list:GetChildren()) do
 		if c:IsA("Frame") then c:Destroy() end
 	end
 	empty.Visible = true
-end)
-
-autoBtn.MouseButton1Click:Connect(refresh)
-actBtn.MouseButton1Click:Connect(refresh)
-
-task.spawn(function()
-	while task.wait(8) do
-		if gui.Enabled then
-			refresh()
-		end
-	end
-end)
-
-local dragging, dragStart, startPos
-main.InputBegan:Connect(function(i)
-	if i.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = i.Position
-		startPos = main.Position
-	end
-end)
-UserInputService.InputEnded:Connect(function(i)
-	if i.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = false
-	end
-end)
-UserInputService.InputChanged:Connect(function(i)
-	if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = i.Position - dragStart
-		main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-	end
 end)
 
 UserInputService.InputBegan:Connect(function(i, g)
