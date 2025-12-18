@@ -1,5 +1,5 @@
 -- =====================================
--- Krypth AJ – Auto Joiner (FINAL FIXED)
+-- Krypth AJ – Auto Joiner (FINAL)
 -- =====================================
 
 -- SERVICES
@@ -12,7 +12,8 @@ local request =
     (syn and syn.request) or
     (http and http.request) or
     (fluxus and fluxus.request) or
-    (krnl and krnl.request)
+    (krnl and krnl.request) or
+    request
 
 if not request then
     warn("HTTP not supported")
@@ -20,174 +21,203 @@ if not request then
 end
 
 -- =====================================
--- CONFIG (YOUR SERVER)
+-- CONFIG
 -- =====================================
-local SERVER_URL = "https://acne-variations-flexibility-designs.trycloudflare.com/servers"
+local SERVER_URL = "https://groups-patch-glad-pollution.trycloudflare.com/servers"
 local AUTO_JOIN = false
 local REFRESH_DELAY = 5
 
 -- =====================================
+-- FONT (SINGLE SOURCE OF TRUTH)
+-- =====================================
+local KrypthFont = Font.new(
+    "rbxasset://fonts/families/TitilliumWeb.json",
+    Enum.FontWeight.Bold,
+    Enum.FontStyle.Normal
+)
+
+-- =====================================
 -- GUI
 -- =====================================
-local gui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
-gui.Name = "KrypthAJ"
+local Gui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
+Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-local main = Instance.new("Frame", gui)
-main.Size = UDim2.new(0,277,0,374)
-main.Position = UDim2.new(0.4,0,0.18,0)
-main.BackgroundColor3 = Color3.fromRGB(27,27,27)
-main.BackgroundTransparency = 0.03
-Instance.new("UICorner", main).CornerRadius = UDim.new(0,2)
-Instance.new("UIDragDetector", main)
+local Main = Instance.new("Frame", Gui)
+Main.Name = "Whole frame"
+Main.Size = UDim2.new(0,277,0,374)
+Main.Position = UDim2.new(0.4,0,0.2,0)
+Main.BackgroundColor3 = Color3.fromRGB(27,27,27)
+Main.BackgroundTransparency = 0.03
+Main.BorderSizePixel = 0
+Instance.new("UIDragDetector", Main)
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0,2)
 
-local stroke = Instance.new("UIStroke", main)
+local stroke = Instance.new("UIStroke", Main)
 stroke.Color = Color3.fromRGB(237,40,0)
 stroke.Thickness = 2
 
--- TITLES
-local title = Instance.new("TextLabel", main)
-title.Text = "Krypth AJ"
-title.Position = UDim2.new(0.02,0,-0.08,0)
-title.Size = UDim2.new(0,120,0,30)
-title.BackgroundTransparency = 1
-title.TextColor3 = Color3.new(1,1,1)
-title.TextSize = 22
-title.Font = Enum.Font.GothamBold
+-- TITLE
+local Title = Instance.new("TextLabel", Main)
+Title.Text = "Krypth AJ"
+Title.Size = UDim2.new(0,140,0,30)
+Title.Position = UDim2.new(0.03,0,-0.09,0)
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextSize = 22
+Title.FontFace = KrypthFont
 
-local logsTxt = Instance.new("TextLabel", main)
-logsTxt.Text = "LOGS"
-logsTxt.Position = UDim2.new(0.55,0,-0.05,0)
-logsTxt.Size = UDim2.new(0,80,0,25)
-logsTxt.BackgroundTransparency = 1
-logsTxt.TextColor3 = Color3.new(1,1,1)
-logsTxt.TextSize = 20
-logsTxt.Font = Enum.Font.GothamBold
-
--- LOG FRAME
-local logs = Instance.new("ScrollingFrame", main)
-logs.Position = UDim2.new(0.32,0,0,0)
-logs.Size = UDim2.new(0,189,0,374)
-logs.CanvasSize = UDim2.new()
-logs.ScrollBarImageTransparency = 1
-logs.BackgroundColor3 = Color3.fromRGB(0,0,0)
-logs.BackgroundTransparency = 0.4
-
-local layout = Instance.new("UIListLayout", logs)
-layout.Padding = UDim.new(0,6)
+-- LOGS TEXT
+local LogsTxt = Instance.new("TextLabel", Main)
+LogsTxt.Text = "LOGS"
+LogsTxt.Size = UDim2.new(0,60,0,20)
+LogsTxt.Position = UDim2.new(0.55,0,-0.05,0)
+LogsTxt.BackgroundTransparency = 1
+LogsTxt.TextColor3 = Color3.new(1,1,1)
+LogsTxt.TextSize = 20
+LogsTxt.FontFace = KrypthFont
 
 -- BUTTON CREATOR
-local function button(text,y)
-    local b = Instance.new("TextButton", main)
+local function createButton(text, y)
+    local b = Instance.new("TextButton", Main)
     b.Size = UDim2.new(0,76,0,31)
-    b.Position = UDim2.new(0.02,0,y,0)
+    b.Position = UDim2.new(0.021,0,y,0)
     b.Text = text
     b.TextColor3 = Color3.new(1,1,1)
     b.TextSize = 20
+    b.FontFace = KrypthFont
     b.BackgroundColor3 = Color3.fromRGB(199,31,0)
-    b.Font = Enum.Font.GothamBold
-    Instance.new("UICorner", b)
+    b.BorderSizePixel = 0
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0,2)
+    Instance.new("UIStroke", b).Color = Color3.fromRGB(237,40,0)
     return b
 end
 
-local RefreshBtn = button("REFRESH",0.024)
-local AutoBtn = button("AUTO JOIN",0.128)
-local ClearBtn = button("CLEAR",0.235)
+local RefreshBtn = createButton("REFRESH",0.024)
+local AutoBtn    = createButton("AUTO JOIN",0.128)
+local ClearBtn   = createButton("CLEAR",0.235)
+
+-- SCROLLING LOG FRAME
+local LogFrame = Instance.new("ScrollingFrame", Main)
+LogFrame.Name = "Log frame"
+LogFrame.Size = UDim2.new(0,189,0,374)
+LogFrame.Position = UDim2.new(0.317,0,0,0)
+LogFrame.CanvasSize = UDim2.new()
+LogFrame.ScrollBarImageTransparency = 1
+LogFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+LogFrame.BackgroundTransparency = 0.4
+LogFrame.BorderSizePixel = 0
+
+local Layout = Instance.new("UIListLayout", LogFrame)
+Layout.Padding = UDim.new(0,6)
 
 -- LOG TEMPLATE
-local function newLog(server)
-    local f = Instance.new("Frame")
-    f.Size = UDim2.new(1,-10,0,55)
-    f.BackgroundColor3 = Color3.fromRGB(199,31,0)
-    Instance.new("UICorner", f)
+local function createLog(data)
+    local log = Instance.new("Frame", LogFrame)
+    log.Size = UDim2.new(1,-12,0,55)
+    log.BackgroundColor3 = Color3.fromRGB(199,31,0)
+    log.BorderSizePixel = 0
+    Instance.new("UICorner", log).CornerRadius = UDim.new(0,4)
 
-    local name = Instance.new("TextLabel", f)
-    name.Text = server.brainrot
-    name.Size = UDim2.new(0.6,0,0.45,0)
+    local name = Instance.new("TextLabel", log)
+    name.Text = data.brainrot
+    name.Size = UDim2.new(0.55,0,0.5,0)
     name.Position = UDim2.new(0.03,0,0.05,0)
     name.BackgroundTransparency = 1
     name.TextColor3 = Color3.new(1,1,1)
-    name.TextSize = 17
-    name.Font = Enum.Font.GothamBold
+    name.TextSize = 18
+    name.FontFace = KrypthFont
 
-    local mps = Instance.new("TextLabel", f)
-    mps.Text = "$"..server.mps.."/s"
-    mps.Size = UDim2.new(0.6,0,0.35,0)
+    local mps = Instance.new("TextLabel", log)
+    mps.Text = "$"..tostring(data.mps).."/s"
+    mps.Size = UDim2.new(0.55,0,0.4,0)
     mps.Position = UDim2.new(0.03,0,0.55,0)
     mps.BackgroundTransparency = 1
     mps.TextColor3 = Color3.new(1,1,1)
-    mps.TextSize = 15
-    mps.Font = Enum.Font.Gotham
+    mps.TextSize = 16
+    mps.FontFace = KrypthFont
 
-    local join = Instance.new("TextButton", f)
+    local join = Instance.new("TextButton", log)
     join.Text = "JOIN"
     join.Size = UDim2.new(0,68,0,40)
-    join.Position = UDim2.new(0.62,0,0.15,0)
-    join.BackgroundColor3 = Color3.fromRGB(199,31,0)
+    join.Position = UDim2.new(0.6,0,0.15,0)
     join.TextColor3 = Color3.new(1,1,1)
     join.TextSize = 20
-    join.Font = Enum.Font.GothamBold
-    Instance.new("UICorner", join)
+    join.FontFace = KrypthFont
+    join.BackgroundColor3 = Color3.fromRGB(199,31,0)
+    join.BorderSizePixel = 0
+    Instance.new("UICorner", join).CornerRadius = UDim.new(0,2)
+    Instance.new("UIStroke", join).Color = Color3.fromRGB(237,40,0)
 
     join.MouseButton1Click:Connect(function()
         TeleportService:TeleportToPlaceInstance(
-            server.placeId,
-            server.jobId,
+            data.placeId,
+            data.jobId,
             Player
         )
     end)
-
-    return f
 end
 
 -- LOGIC
 local function clearLogs()
-    for _,v in ipairs(logs:GetChildren()) do
+    for _,v in ipairs(LogFrame:GetChildren()) do
         if v:IsA("Frame") then v:Destroy() end
     end
-    logs.CanvasSize = UDim2.new()
+    LogFrame.CanvasSize = UDim2.new()
 end
 
 local function fetchServers()
-    local res = request({Url=SERVER_URL,Method="GET"})
+    local res = request({Url = SERVER_URL, Method = "GET"})
     if not res or not res.Body then return end
 
-    local data = HttpService:JSONDecode(res.Body)
-    if type(data) ~= "table" then return end
+    local ok, data = pcall(function()
+        return HttpService:JSONDecode(res.Body)
+    end)
+
+    if not ok or type(data) ~= "table" then
+        warn("Invalid JSON from server")
+        return
+    end
 
     clearLogs()
     for _,server in ipairs(data) do
-        if server.brainrot and server.jobId then
-            local log = newLog(server)
-            log.Parent = logs
-        end
+        createLog(server)
     end
 
     task.wait()
-    logs.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 10)
-
-    if AUTO_JOIN and data[1] then
-        TeleportService:TeleportToPlaceInstance(
-            data[1].placeId,
-            data[1].jobId,
-            Player
-        )
-    end
+    LogFrame.CanvasSize = UDim2.new(0,0,0,Layout.AbsoluteContentSize.Y + 10)
 end
 
--- BUTTONS
+-- BUTTON HOOKS
 RefreshBtn.MouseButton1Click:Connect(fetchServers)
+
 ClearBtn.MouseButton1Click:Connect(clearLogs)
+
 AutoBtn.MouseButton1Click:Connect(function()
     AUTO_JOIN = not AUTO_JOIN
     AutoBtn.Text = AUTO_JOIN and "AUTO JOIN: ON" or "AUTO JOIN"
 end)
 
--- AUTO REFRESH
+-- AUTO JOIN LOOP
 task.spawn(function()
     while true do
         task.wait(REFRESH_DELAY)
-        fetchServers()
+        if AUTO_JOIN then
+            local res = request({Url = SERVER_URL, Method = "GET"})
+            if res and res.Body then
+                local ok, data = pcall(function()
+                    return HttpService:JSONDecode(res.Body)
+                end)
+                if ok and data[1] then
+                    TeleportService:TeleportToPlaceInstance(
+                        data[1].placeId,
+                        data[1].jobId,
+                        Player
+                    )
+                end
+            end
+        end
     end
 end)
 
+-- INIT
 fetchServers()
