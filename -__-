@@ -1,153 +1,112 @@
-local G2L = {}
+local gui = loadstring(game:HttpGet("https://pastebin.com/raw/tMiN10QL"))()
+-- ↑ If you already pasted G2L directly, REMOVE this line and keep gui reference below
 
-G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"))
-G2L["1"].ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local ScreenGui = gui
+local Whole = ScreenGui:FindFirstChild("Whole frame", true)
+local LogFrame = Whole:FindFirstChild("Log frame", true)
 
-G2L["2"] = Instance.new("Frame", G2L["1"])
-G2L["2"].BorderSizePixel = 0
-G2L["2"].BackgroundColor3 = Color3.fromRGB(27,27,27)
-G2L["2"].Size = UDim2.new(0,277,0,374)
-G2L["2"].Position = UDim2.new(0.39641,0,0.1684,0)
-G2L["2"].BackgroundTransparency = 0.03
-G2L["2"].Name = "Whole frame"
+local RefreshBtn = Whole:FindFirstChild("Refresh Button", true)
+local ClearBtn = Whole:FindFirstChild("TextButton", true)
+local AutoJoinBtn = Whole:FindFirstChild("Auto join", true)
 
-Instance.new("UIDragDetector", G2L["2"])
-Instance.new("UICorner", G2L["2"]).CornerRadius = UDim.new(0,2)
-local ws = Instance.new("UIStroke", G2L["2"])
-ws.Thickness = 2
-ws.Color = Color3.fromRGB(237,40,0)
-
-G2L["6"] = Instance.new("Frame", G2L["2"])
-G2L["6"].BorderSizePixel = 0
-G2L["6"].BackgroundColor3 = Color3.fromRGB(0,0,0)
-G2L["6"].Size = UDim2.new(0,189,0,374)
-G2L["6"].Position = UDim2.new(0.31769,0,0,0)
-G2L["6"].BackgroundTransparency = 0.4
-G2L["6"].Name = "Log frame"
-
-G2L["7"] = Instance.new("Frame", G2L["6"])
-G2L["7"].Size = UDim2.new(0,176,0,55)
-G2L["7"].Position = UDim2.new(0.03175,0,0.02406,0)
-G2L["7"].BackgroundColor3 = Color3.fromRGB(199,31,0)
-G2L["7"].Name = "LOG"
-
-Instance.new("UICorner", G2L["7"]).CornerRadius = UDim.new(0,4)
-local ls = Instance.new("UIStroke", G2L["7"])
-ls.Thickness = 2
-ls.Color = Color3.fromRGB(117,0,0)
-
-G2L["a"] = Instance.new("TextLabel", G2L["7"])
-G2L["a"].Size = UDim2.new(0,37,0,16)
-G2L["a"].Position = UDim2.new(0,0,0.56364,0)
-G2L["a"].BackgroundTransparency = 1
-G2L["a"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["a"].TextSize = 20
-G2L["a"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["a"].Text = "MPS"
-G2L["a"].Name = "MPS"
-
-G2L["b"] = Instance.new("TextLabel", G2L["7"])
-G2L["b"].Size = UDim2.new(0,93,0,16)
-G2L["b"].Position = UDim2.new(0,0,0.12727,0)
-G2L["b"].BackgroundTransparency = 1
-G2L["b"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["b"].TextSize = 20
-G2L["b"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["b"].Text = "Brainrot name"
-G2L["b"].Name = "Brainrot name"
-
-G2L["c"] = Instance.new("TextButton", G2L["7"])
-G2L["c"].Size = UDim2.new(0,68,0,40)
-G2L["c"].Position = UDim2.new(0.56818,0,0.12727,0)
-G2L["c"].BackgroundColor3 = Color3.fromRGB(199,31,0)
-G2L["c"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["c"].TextSize = 22
-G2L["c"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["c"].Text = "JOIN"
-G2L["c"].Name = "Join button"
-Instance.new("UICorner", G2L["c"]).CornerRadius = UDim.new(0,2)
-local js = Instance.new("UIStroke", G2L["c"])
-js.Thickness = 2
-js.Color = Color3.fromRGB(237,40,0)
-
-G2L["f"] = Instance.new("TextButton", G2L["2"])
-G2L["f"].Size = UDim2.new(0,76,0,31)
-G2L["f"].Position = UDim2.new(0.02166,0,0.02406,0)
-G2L["f"].BackgroundColor3 = Color3.fromRGB(199,31,0)
-G2L["f"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["f"].TextSize = 22
-G2L["f"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["f"].Text = "REFRESH"
-G2L["f"].Name = "Refresh Button"
-
-G2L["12"] = Instance.new("TextButton", G2L["2"])
-G2L["12"].Size = UDim2.new(0,76,0,31)
-G2L["12"].Position = UDim2.new(0.02166,0,0.23529,0)
-G2L["12"].BackgroundColor3 = Color3.fromRGB(199,31,0)
-G2L["12"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["12"].TextSize = 21
-G2L["12"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["12"].Text = "CLEAR"
-
-G2L["16"] = Instance.new("TextButton", G2L["2"])
-G2L["16"].Size = UDim2.new(0,76,0,31)
-G2L["16"].Position = UDim2.new(0.02166,0,0.12834,0)
-G2L["16"].BackgroundColor3 = Color3.fromRGB(199,31,0)
-G2L["16"].TextColor3 = Color3.fromRGB(255,255,255)
-G2L["16"].TextSize = 20
-G2L["16"].FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json",Enum.FontWeight.Bold)
-G2L["16"].Text = "AUTO JOIN"
-
-local HttpService = game:GetService("HttpService")
-local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local PLACE_ID = game.PlaceId
-local RELAY_URL = "https://YOUR_RELAY_URL/servers"
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+local Player = Players.LocalPlayer
 
-local template = G2L["7"]
-template.Visible = false
+local request = (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request) or (krnl and krnl.request) or request
+if not request then return end
 
+local RELAY_SERVERS = "https://acne-variations-flexibility-designs.trycloudflare.com/servers"
+
+local autoJoin = false
+local logs = {}
+
+-- SCROLLING
+local layout = Instance.new("UIListLayout", LogFrame)
+layout.Padding = UDim.new(0,6)
+
+local padding = Instance.new("UIPadding", LogFrame)
+padding.PaddingTop = UDim.new(0,8)
+padding.PaddingLeft = UDim.new(0,6)
+
+LogFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
+LogFrame.CanvasSize = UDim2.new(0,0,0,0)
+LogFrame.ScrollBarImageTransparency = 0.4
+LogFrame.ScrollBarThickness = 4
+
+-- CLEAR LOGS
 local function clearLogs()
-	for _,v in ipairs(G2L["6"]:GetChildren()) do
-		if v:IsA("Frame") and v ~= template then
+	for _,v in ipairs(LogFrame:GetChildren()) do
+		if v:IsA("Frame") and v.Name == "LOG" then
 			v:Destroy()
 		end
 	end
 end
 
-local function addLog(data,y)
-	local f = template:Clone()
-	f.Visible = true
-	f.Position = UDim2.new(0.03175,0,0,y)
-	f.Parent = G2L["6"]
-	f["Brainrot name"].Text = data.brainrot or "Unknown"
-	f.MPS.Text = tostring(data.mps)
-	f["Join button"].MouseButton1Click:Connect(function()
-		TeleportService:TeleportToPlaceInstance(PLACE_ID,data.jobId,player)
+-- CREATE LOG ENTRY
+local function createLog(data)
+	local log = Whole.Log_frame.LOG:Clone()
+	log.Parent = LogFrame
+	log.Visible = true
+
+	log:FindFirstChild("Brainrot name").Text = data.brainrot
+	log:FindFirstChild("MPS").Text = tostring(math.floor(data.mps/1e6)).."M"
+
+	local join = log:FindFirstChild("Join button")
+	join.MouseButton1Click:Connect(function()
+		TeleportService:TeleportToPlaceInstance(
+			data.placeId,
+			data.jobId,
+			Player
+		)
 	end)
+
+	LogFrame.CanvasSize = UDim2.new(0,0,0,layout.AbsoluteContentSize.Y + 20)
 end
 
-local function refresh()
+-- FETCH SERVERS
+local function fetchServers()
+	local res = request({
+		Url = RELAY_SERVERS,
+		Method = "GET"
+	})
+	if not res or not res.Body then return end
+
+	local data = HttpService:JSONDecode(res.Body)
 	clearLogs()
-	local ok,res = pcall(function()
-		return HttpService:JSONDecode(game:HttpGet(RELAY_URL))
-	end)
-	if not ok then return end
-	table.sort(res,function(a,b) return (a.mps or 0) > (b.mps or 0) end)
-	local y = 0.02406
-	for _,s in ipairs(res) do
-		if s.placeId == PLACE_ID then
-			addLog(s,y)
-			y += 0.17
-		end
+
+	for _,server in ipairs(data) do
+		createLog(server)
 	end
 end
 
-G2L["f"].MouseButton1Click:Connect(refresh)
-G2L["12"].MouseButton1Click:Connect(clearLogs)
-G2L["16"].MouseButton1Click:Connect(refresh)
+-- AUTO JOIN LOOP
+task.spawn(function()
+	while true do
+		task.wait(2)
+		if autoJoin then
+			local res = request({Url = RELAY_SERVERS, Method = "GET"})
+			if res and res.Body then
+				local data = HttpService:JSONDecode(res.Body)
+				if data[1] then
+					TeleportService:TeleportToPlaceInstance(
+						data[1].placeId,
+						data[1].jobId,
+						Player
+					)
+				end
+			end
+		end
+	end
+end)
 
-refresh()
+-- BUTTON HOOKS
+RefreshBtn.MouseButton1Click:Connect(fetchServers)
 
-return G2L["1"]
+ClearBtn.MouseButton1Click:Connect(clearLogs)
+
+AutoJoinBtn.MouseButton1Click:Connect(function()
+	autoJoin = not autoJoin
+	AutoJoinBtn.Text = autoJoin and "AUTO JOIN ✓" or "AUTO JOIN"
+end)
