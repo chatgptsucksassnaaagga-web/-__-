@@ -1,5 +1,5 @@
 -- =====================================
--- Krypth Auto Joiner (FINAL FIX)
+-- Krypth Auto Joiner (DELTA SAFE FINAL)
 -- =====================================
 
 repeat task.wait() until game:IsLoaded()
@@ -10,7 +10,7 @@ local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
 local Player = Players.LocalPlayer
 
--- ===== HTTP (DELTA / KRNL SAFE) =====
+-- ===== HTTP =====
 local http_request =
     (syn and syn.request) or
     (http and http.request) or
@@ -24,12 +24,9 @@ if type(http_request) ~= "function" then
 end
 
 -- ===== CONFIG =====
-local SERVER_URL = "https://venture-round-blake-commercial.trycloudflare.com/servers"
+local SERVER_URL = "https://compilation-chairs-activation-norm.trycloudflare.com/servers"
 local AUTO_JOIN = false
 local REFRESH_DELAY = 5
-
--- ===== FONT =====
-local KrypthFont = Font.fromEnum(Enum.Font.GothamBold)
 
 -- ===== GUI =====
 local Gui = Instance.new("ScreenGui")
@@ -50,7 +47,7 @@ stroke.Thickness = 2
 
 local Title = Instance.new("TextLabel", Main)
 Title.Text = "Krypth AJ"
-Title.FontFace = KrypthFont
+Title.Font = Enum.Font.GothamBold
 Title.TextSize = 26
 Title.TextColor3 = Color3.new(1,1,1)
 Title.BackgroundTransparency = 1
@@ -60,14 +57,14 @@ Title.TextXAlignment = Enum.TextXAlignment.Left
 
 local LogsText = Instance.new("TextLabel", Main)
 LogsText.Text = "LOGS"
-LogsText.FontFace = KrypthFont
+LogsText.Font = Enum.Font.GothamBold
 LogsText.TextSize = 22
 LogsText.TextColor3 = Color3.new(1,1,1)
 LogsText.BackgroundTransparency = 1
 LogsText.Position = UDim2.new(0.63,0,0.03,0)
 LogsText.Size = UDim2.new(0,100,0,24)
-LogsText.TextXAlignment = Enum.TextXAlignment.Left
 
+-- ===== BUTTONS =====
 local ButtonHolder = Instance.new("Frame", Main)
 ButtonHolder.BackgroundTransparency = 1
 ButtonHolder.Position = UDim2.new(0.03,0,0.12,0)
@@ -78,7 +75,7 @@ local function makeButton(text,y)
     b.Size = UDim2.new(1,0,0,40)
     b.Position = UDim2.new(0,0,0,y)
     b.Text = text
-    b.FontFace = KrypthFont
+    b.Font = Enum.Font.GothamBold
     b.TextSize = 18
     b.TextColor3 = Color3.new(1,1,1)
     b.BackgroundColor3 = Color3.fromRGB(200,35,20)
@@ -90,6 +87,7 @@ local RefreshBtn = makeButton("REFRESH",0)
 local AutoBtn = makeButton("AUTO JOIN",55)
 local ClearBtn = makeButton("CLEAR",110)
 
+-- ===== LOGS =====
 local Logs = Instance.new("ScrollingFrame", Main)
 Logs.Position = UDim2.new(0.36,0,0.12,0)
 Logs.Size = UDim2.new(0,230,0,340)
@@ -111,10 +109,8 @@ local function clearLogs()
 end
 
 local function createLog(s)
-    if type(s) ~= "table" then return end
-
-    local brainrotName = tostring(s.brainrot or "Unknown")
-    local mpsValue = tonumber(s.mps) or tonumber(s.money) or 0
+    local brainrot = tostring(s.brainrot or "Unknown")
+    local mps = tonumber(s.mps) or tonumber(s.money) or 0
     local placeId = tonumber(s.placeId)
     local jobId = tostring(s.jobId or "")
 
@@ -126,8 +122,8 @@ local function createLog(s)
     Instance.new("UICorner", f).CornerRadius = UDim.new(0,5)
 
     local name = Instance.new("TextLabel", f)
-    name.Text = brainrotName
-    name.FontFace = KrypthFont
+    name.Text = brainrot
+    name.Font = Enum.Font.GothamBold
     name.TextSize = 18
     name.TextColor3 = Color3.new(1,1,1)
     name.BackgroundTransparency = 1
@@ -135,19 +131,19 @@ local function createLog(s)
     name.Size = UDim2.new(0.65,0,0.45,0)
     name.TextXAlignment = Enum.TextXAlignment.Left
 
-    local mps = Instance.new("TextLabel", f)
-    mps.Text = "$"..mpsValue.."/s"
-    mps.FontFace = KrypthFont
-    mps.TextSize = 16
-    mps.TextColor3 = Color3.new(1,1,1)
-    mps.BackgroundTransparency = 1
-    mps.Position = UDim2.new(0.03,0,0.55,0)
-    mps.Size = UDim2.new(0.65,0,0.4,0)
-    mps.TextXAlignment = Enum.TextXAlignment.Left
+    local mpsLabel = Instance.new("TextLabel", f)
+    mpsLabel.Text = "$"..mps.."/s"
+    mpsLabel.Font = Enum.Font.Gotham
+    mpsLabel.TextSize = 16
+    mpsLabel.TextColor3 = Color3.new(1,1,1)
+    mpsLabel.BackgroundTransparency = 1
+    mpsLabel.Position = UDim2.new(0.03,0,0.55,0)
+    mpsLabel.Size = UDim2.new(0.65,0,0.4,0)
+    mpsLabel.TextXAlignment = Enum.TextXAlignment.Left
 
     local join = Instance.new("TextButton", f)
     join.Text = "JOIN"
-    join.FontFace = KrypthFont
+    join.Font = Enum.Font.GothamBold
     join.TextSize = 18
     join.TextColor3 = Color3.new(1,1,1)
     join.BackgroundColor3 = Color3.fromRGB(140,20,15)
@@ -181,7 +177,6 @@ local function fetchServers()
     end
 end
 
--- ===== BUTTONS =====
 RefreshBtn.MouseButton1Click:Connect(fetchServers)
 ClearBtn.MouseButton1Click:Connect(clearLogs)
 
@@ -190,18 +185,14 @@ AutoBtn.MouseButton1Click:Connect(function()
     AutoBtn.Text = AUTO_JOIN and "AUTO JOIN: ON" or "AUTO JOIN"
 end)
 
--- ===== AUTO JOIN =====
 task.spawn(function()
     while true do
         task.wait(REFRESH_DELAY)
         if AUTO_JOIN then
             local r = http_request({ Url = SERVER_URL, Method = "GET" })
             if r and r.Body then
-                local d
-                pcall(function()
-                    d = HttpService:JSONDecode(r.Body)
-                end)
-                if type(d) == "table" and d[1] then
+                local d = HttpService:JSONDecode(r.Body)
+                if d[1] then
                     TeleportService:TeleportToPlaceInstance(
                         tonumber(d[1].placeId),
                         tostring(d[1].jobId),
@@ -213,5 +204,4 @@ task.spawn(function()
     end
 end)
 
--- ===== START =====
 fetchServers()
